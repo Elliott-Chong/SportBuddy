@@ -1,0 +1,8 @@
+.search::placeholder {
+  color: #848484;
+  /* background-color: #c4c4c4; */
+}
+
+.search:focus {
+  outline: none;
+}
