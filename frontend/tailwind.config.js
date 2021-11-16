@@ -16,6 +16,7 @@ module.exports = {
       grey: "#E2E2E2",
       anothershadeofgrey: "#C4C4C4",
       cardGrey: "#848484",
+      white: "#ffffff",
     },
   },
   variants: {

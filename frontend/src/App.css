@@ -6,3 +6,14 @@
 .search:focus {
   outline: none;
 }
+
+.ham {
+  width: 2rem;
+  height: 0.25rem;
+  background-color: #626262;
+  margin-bottom: 6px;
+}
+
+.ham:nth-child(3) {
+  margin: 0;
+}

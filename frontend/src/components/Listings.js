@@ -5,7 +5,7 @@ import IndividualListing from "./IndividualListing";
 const Listings = () => {
   return (
     <section
-      className="bg-grey px-20 py-12 flex flex-col items-center"
+      className="md:bg-grey md:px-20 md:py-12 flex flex-col items-center "
       style={{ borderRadius: "50px" }}
     >
       <Search />

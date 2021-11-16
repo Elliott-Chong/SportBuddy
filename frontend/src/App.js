@@ -7,7 +7,7 @@ import Listings from "./components/Listings.js";
 function App() {
   const { value } = useGlobalContext();
   return (
-    <main className="p-8 px-20 sm:px-10 sm:p-6">
+    <main className="p-8 md:px-20 px-5 ">
       <Navbar />
       <Listings />
       {/* <ul>
