@@ -4,7 +4,7 @@ const Search = () => {
   const [search, setSearch] = React.useState("");
   return (
     <form
-      className="flex justify-center align-center mb-10"
+      className="flex justify-center align-center mb-10 font-custom"
       onSubmit={(e) => e.preventDefault()}
     >
       <input

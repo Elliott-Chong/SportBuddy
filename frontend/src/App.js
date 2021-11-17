@@ -3,30 +3,19 @@ import data from "./facilities_data";
 import { useGlobalContext } from "./context";
 import Navbar from "./components/Navbar.js";
 import Listings from "./components/Listings.js";
+import { Routes, Route, Link } from "react-router-dom";
+import MainPage from "./pages/MainPage";
 
 function App() {
   const { value } = useGlobalContext();
   return (
-    <main className="p-8 md:px-20 px-5 ">
-      <Navbar />
-      <Listings />
-      {/* <ul>
-        {data.map((facility) => {
-          return <li className="text-blue-700 font-poppins">{facility}</li>;
-        })}
-      </ul> */}
-    </main>
-  );
-  return (
     <>
-      <h1 className="font-poppins font-bold text-siena text-5xl">
-        Sport Buddy
-      </h1>
-      <ul>
-        {data.map((facility) => {
-          return <li className="text-blue-700 font-poppins">{facility}</li>;
-        })}
-      </ul>
+      <main className="p-8 md:px-20 px-5 ">
+        <Navbar />
+        <Routes>
+          <Route path="/" exact element={<MainPage />} />
+        </Routes>
+      </main>
     </>
   );
 }
