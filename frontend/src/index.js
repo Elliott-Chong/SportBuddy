@@ -4,15 +4,15 @@ import "./index.css";
 import AppContext from "./context";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
+// import axios from "axios";
+// axios.defaults.baseURL = "http://localhost:5000";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Router>
-      <AppContext>
-        <App />
-      </AppContext>
-    </Router>
-  </React.StrictMode>,
+  <Router>
+    <AppContext>
+      <App />
+    </AppContext>
+  </Router>,
   document.getElementById("root")
 );
 

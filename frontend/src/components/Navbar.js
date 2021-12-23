@@ -1,32 +1,123 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useGlobalContext } from "../context";
 
 const Navbar = () => {
+  const hamRef = React.useRef();
+  const sidebarRef = React.useRef();
+  const [ham, setHam] = React.useState(true);
+  const back = () => {
+    setTimeout(() => hamRef.current.classList.toggle("active"), 300);
+    hamRef.current.classList.toggle("rotate");
+    sidebarRef.current.classList.toggle("active");
+    document.querySelector("body").classList.toggle("active");
+    setHam(!ham);
+  };
+  const toggleHam = () => {
+    if (ham) {
+      hamRef.current.classList.toggle("active");
+      setTimeout(() => hamRef.current.classList.toggle("rotate"), 300);
+    } else {
+      setTimeout(() => hamRef.current.classList.toggle("active"), 300);
+      hamRef.current.classList.toggle("rotate");
+    }
+    setHam(!ham);
+    sidebarRef.current.classList.toggle("active");
+    document.querySelector("body").classList.toggle("active");
+  };
+  const {
+    logout,
+    state: { user },
+  } = useGlobalContext();
   return (
-    <nav className="mb-10 flex md:justify-between py-3 relative pl-10 font-custom">
-      <Link
-        className="font-custom font-bold text-siena text-5xl items-center my-auto"
-        to="/"
+    <>
+      <nav className="my-10 mx-5 flex px-10 z-20 absolute py-1  w-full   font-custom">
+        <Link
+          className="font-custom font-bold text-siena text-5xl items-center my-auto"
+          to="/"
+        >
+          Sport Buddy
+        </Link>
+        <div className=" md:flex ml-auto justify-between text-darkGrey text-3xl space-x-7 hidden items-center">
+          {user && (
+            <>
+              <button
+                className="my-0 font-bold custom-underline"
+                onClick={logout}
+              >
+                Logout
+              </button>
+              <Link to="/create" className="my-0 font-bold custom-underline">
+                Create Listing
+              </Link>
+            </>
+          )}
+          <Link className="my-0 font-bold custom-underline" to="/about">
+            About
+          </Link>
+          <Link
+            className="my-0 font-bold bg-yellow px-6 custom-underline py-4 rounded-full"
+            to="/login"
+          >
+            Login/Sign up
+          </Link>
+        </div>
+        <button
+          id="ham-wrapper"
+          ref={hamRef}
+          onClick={toggleHam}
+          className="md:hidden m-10"
+        >
+          <div className="ham relative top-0"></div>
+          <div className="ham"></div>
+          <div className="ham relative top-0"></div>
+        </button>
+      </nav>
+
+      <section
+        id="sidebar"
+        ref={sidebarRef}
+        className="absolute top-0 overflow-hidden z-10 left-0 flex text-3xl font-bold text-siena space-y-6 transform translate-x-full justify-center items-center flex-col h-screen w-full bg-white"
       >
-        Sport Buddy
-      </Link>
-      <div className=" md:flex justify-between text-darkGrey text-3xl space-x-7 hidden items-center">
-        <Link className="my-0 font-bold custom-underline" to="/about">
-          about
+        <Link
+          onClick={back}
+          to="/login"
+          className="bg-siena text-white  py-2 px-4 rounded-full text-3xl"
+        >
+          Login/Sign Up
         </Link>
         <Link
-          className="my-0 font-bold bg-yellow px-4 custom-underline py-2 rounded-full"
-          to="/auth"
+          to="/"
+          onClick={back}
+          className="bg-siena text-white py-2 px-4 rounded-full text-3xl"
         >
-          login/signup
+          Home
         </Link>
-      </div>
-      <button className="md:hidden m-10">
-        <div className="ham"></div>
-        <div className="ham"></div>
-        <div className="ham"></div>
-      </button>
-    </nav>
+        {user && (
+          <>
+            <Link
+              to="/"
+              className="bg-siena text-white py-2 px-4 rounded-full text-3xl"
+              onClick={() => {
+                logout();
+                back();
+              }}
+            >
+              Logout
+            </Link>
+            <Link
+              to="/create"
+              className="bg-siena text-white py-2 px-4 rounded-full text-3xl"
+              onClick={() => {
+                back();
+              }}
+            >
+              Create Listing
+            </Link>
+          </>
+        )}
+      </section>
+    </>
   );
 };
 

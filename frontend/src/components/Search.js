@@ -1,7 +1,11 @@
 import React from "react";
+import { useGlobalContext } from "../context";
 
 const Search = () => {
-  const [search, setSearch] = React.useState("");
+  const {
+    state: { search },
+    dispatch,
+  } = useGlobalContext();
   return (
     <form
       className="flex justify-center align-center mb-10 font-custom"
@@ -12,7 +16,9 @@ const Search = () => {
         type="text"
         name="search"
         placeholder="search"
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={(e) =>
+          dispatch({ type: "SET_SEARCH", payload: e.target.value })
+        }
         value={search}
       />
     </form>
