@@ -10,14 +10,11 @@ router.post(
   body("slotsLeft", "Amount of people needed is required").not().isEmpty(),
   body("remarks", "Remarks is required").not().isEmpty(),
   async (req, res) => {
-    console.log("im creating post in backend now");
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log("herer?");
       return res.status(400).json({ errors: errors.array() });
     }
     try {
-      console.log("or here?");
       const { location, date, sport, slotsLeft, remarks } = req.body;
       let listing = new Listing({
         user: req.user.id,
@@ -35,5 +32,60 @@ router.post(
     }
   }
 );
+
+router.get("/", async (req, res) => {
+  try {
+    let listings = await Listing.find();
+    return res.json(listings);
+  } catch (error) {
+    res.status(400).json({ errors: { msg: "Server Error in line 41" } });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    const listing = await Listing.findById(req.params.id)
+      .populate("user")
+      .populate("peopleJoined");
+    if (!listing)
+      return res.status(400).json({ errors: [{ msg: "Listing not found" }] });
+    return res.json(listing);
+  } catch (error) {
+    if (error.kind === "ObjectId")
+      return res.status(400).json([{ errors: ["Invalid listing ID"] }]);
+    else console.log(error);
+    return res
+      .status(400)
+      .json({ errors: [{ msg: "Server Error in line 59" }] });
+  }
+});
+
+router.get("/join/:id", async (req, res) => {
+  try {
+    const listing = await Listing.findById(req.params.id);
+    if (!listing)
+      return res.status(400).json({ errors: [{ msg: "Listing not found" }] });
+    let newPeople = listing.peopleJoined;
+    newPeople = newPeople.filter(
+      (person) => person._id.toString() !== req.user._id.toString()
+    );
+    if (newPeople.length === listing.peopleJoined.length) {
+      newPeople.push(req.user._id);
+      listing.peopleJoined = newPeople;
+      await listing.save();
+      return res.send("add");
+    } else {
+      listing.peopleJoined = newPeople;
+      await listing.save();
+      return res.send("remove");
+    }
+  } catch (error) {
+    if (error.kind === "ObjectId")
+      return res.status(400).json([{ errors: ["Invalid listing ID"] }]);
+    return res
+      .status(400)
+      .json({ errors: [{ msg: "Server Error in line 68" }] });
+  }
+});
 
 module.exports = router;

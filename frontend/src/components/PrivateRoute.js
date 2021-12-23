@@ -8,8 +8,6 @@ const PrivateRoute = ({ path, component: Component }) => {
     state: { user },
   } = useGlobalContext();
   React.useEffect(() => loadUser(), [loadUser]);
-  console.log("i am in private route now");
-  user ? console.log("user allowe") : console.log("not allowed");
   return (
     <Route
       path={path}

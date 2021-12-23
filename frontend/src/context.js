@@ -100,6 +100,49 @@ const Context = ({ children }) => {
       console.error(error);
     }
   };
+
+  const fetchListings = useCallback(async () => {
+    try {
+      const response = await axios.get("/api/listing");
+      dispatch({ type: "SET_LISTINGS", payload: response.data });
+    } catch (error) {
+      error.response.data.errors.forEach((error) => {
+        setAlert("danger", error.msg);
+      });
+      console.error(error);
+    }
+  }, []);
+
+  const fetchSingleListing = useCallback(async (id) => {
+    try {
+      const response = await axios.get(`/api/listing/${id}`);
+      dispatch({ type: "SET_LISTING", payload: response.data });
+    } catch (error) {
+      error.response.data.errors.forEach((error) => {
+        setAlert("danger", error.msg);
+      });
+      console.error(error);
+    }
+  }, []);
+
+  const joinRoom = async (id) => {
+    try {
+      const response = await axios.get(`/api/listing/join/${id}`);
+      if (response.data === "remove") {
+        dispatch({ type: "LEAVE_ROOM" });
+        setAlert("success", "Left");
+      } else {
+        dispatch({ type: "JOIN_ROOM" });
+        setAlert("success", "Joined!");
+      }
+    } catch (error) {
+      error.response.data.errors.forEach((error) => {
+        setAlert("danger", error.msg);
+      });
+      console.error(error);
+    }
+  };
+
   const createListing = async (
     location,
     date,
@@ -134,9 +177,12 @@ const Context = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
+        fetchListings,
         createListing,
         registerUser,
+        fetchSingleListing,
         loadUser,
+        joinRoom,
         logout,
         loginUser,
         state,

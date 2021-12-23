@@ -15,7 +15,7 @@ const Search = () => {
         className="rounded-full py-3 px-6 font-bold text-2xl search bg-anothershadeofgrey max-w-xs"
         type="text"
         name="search"
-        placeholder="search"
+        placeholder="Search"
         onChange={(e) =>
           dispatch({ type: "SET_SEARCH", payload: e.target.value })
         }

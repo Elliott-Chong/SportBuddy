@@ -1,6 +1,7 @@
 import React from "react";
 import { useGlobalContext } from "../context";
 import { useHistory } from "react-router-dom";
+import facilities from "../facilities_data";
 
 const CreateListing = () => {
   const { createListing } = useGlobalContext();
@@ -29,16 +30,18 @@ const CreateListing = () => {
         className="flex flex-col space-y-6 justify-center items-center"
         onSubmit={submit}
       >
-        <input
+        <select
           required
-          className="create-input focus:border-opacity-10 w-full  rounded-lg md:border-4 border-2 border-yellow py-2 px-4 text-darkGrey font-bold text-xl placeholder-anothershadeofgrey"
-          placeholder="Location"
-          type="text"
           name="location"
+          className="create-input focus:border-opacity-10 w-full  rounded-lg md:border-4 border-2 border-yellow py-2 px-4 text-darkGrey font-bold text-xl placeholder-anothershadeofgrey"
           value={location}
           onChange={change}
-        />
-
+        >
+          {facilities.map((facil, index) => {
+            const place = facil.split("\n")[0];
+            return <option value={facil}>{place}</option>;
+          })}
+        </select>
         <input
           className="create-input focus:border-opacity-10 w-full  rounded-lg md:border-4 border-2 border-yellow py-2 px-4 text-darkGrey font-bold text-xl placeholder-anothershadeofgrey"
           required
