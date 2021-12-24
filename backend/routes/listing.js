@@ -8,7 +8,6 @@ router.post(
   body("date", "Date is required").not().isEmpty().isDate(),
   body("sport", "Sport is required").not().isEmpty(),
   body("slotsLeft", "Amount of people needed is required").not().isEmpty(),
-  body("remarks", "Remarks is required").not().isEmpty(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -22,16 +21,49 @@ router.post(
         remarks,
         dateOfMeet: date,
         location,
-        sport,
+        sport: sport,
         peopleJoined: [req.user.id],
       });
       await listing.save();
       return res.json(listing);
     } catch (error) {
-      res.status(400).json({ errors: { msg: "Server Error" } });
+      return res.status(400).json({ errors: { msg: "Server Error" } });
     }
   }
 );
+
+router.post("/search", async (req, res) => {
+  try {
+    const query = req.body.query.trim().toLowerCase();
+    const type = req.body.type.trim().toLowerCase();
+    let filtered;
+    switch (type) {
+      case "sport":
+        filtered = await Listing.find({
+          sport: { $regex: query, $options: "i" },
+        });
+        console.log("in sport: ");
+      case "both":
+        filtered = await Listing.find({
+          $or: [
+            { sport: query, $options: "i" },
+            { location: { $regex: ".*" + query + ".*", $options: "i" } },
+          ],
+        });
+        console.log("in both: ");
+
+      case "location":
+        filtered = await Listing.find({
+          location: { $regex: query, $options: "i" },
+        });
+        console.log("in location: ");
+    }
+
+    return res.json(filtered);
+  } catch (error) {
+    return res.status(400).json({ errors: { msg: "Server Error at like 45" } });
+  }
+});
 
 router.get("/", async (req, res) => {
   try {

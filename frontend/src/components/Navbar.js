@@ -68,16 +68,16 @@ const Navbar = () => {
           onClick={toggleHam}
           className="md:hidden m-10"
         >
-          <div className="ham relative top-0"></div>
+          {/* <div className="ham relative top-0"></div> */}
           <div className="ham"></div>
-          <div className="ham relative top-0"></div>
+          {/* <div className="ham relative top-0"></div> */}
         </button>
       </nav>
 
       <section
         id="sidebar"
         ref={sidebarRef}
-        className="absolute top-0 overflow-hidden z-10 left-0 flex text-3xl font-bold text-siena space-y-6 transform translate-x-full justify-center items-center flex-col h-screen w-full bg-white"
+        className="absolute top-0 overflow-hidden z-10 left-0 flex text-3xl font-bold text-siena space-y-6 transform -translate-x-full justify-center items-center flex-col h-screen w-full bg-white"
       >
         <Link
           onClick={back}

@@ -26,6 +26,7 @@ const Listings = () => {
                 sport={listing.sport}
                 location={listing.location}
                 id={listing._id}
+                peopleJoinedLength={listing.peopleJoined.length}
                 slotsLeft={listing.amountOfPeopleNeeded}
               />
             );

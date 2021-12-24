@@ -32,12 +32,12 @@ const Login = () => {
           e.preventDefault();
           loginUser(email, password, history);
         }}
-        className="flex flex-col justify-center items-center space-y-4"
+        className="flex flex-col w-full justify-center items-center space-y-4"
       >
         <input
           onChange={onChange}
           type="text"
-          className="border-4 border-yellow font-bold  pt-2 py-2 px-5 rounded-full font-xl"
+          className="border-4 border-yellow font-bold  pt-2 py-2 px-5 w-full rounded-full font-xl"
           name="email"
           id="email"
           placeholder="Email"
@@ -46,13 +46,13 @@ const Login = () => {
           type="password"
           onChange={onChange}
           name="password"
-          className="border-4 border-yellow pt-2 py-2 font-bold px-5 rounded-full font-xl"
+          className="border-4 border-yellow pt-2 py-2 font-bold px-5 w-full rounded-full font-xl"
           id="password"
           placeholder="Password"
         />
         <input
           type="submit"
-          className="cursor-pointer border-4 border-yellow bg-white px-4 py-2 rounded-full font-bold  text-darkGrey"
+          className="cursor-pointer border-4 text-xl border-yellow bg-white px-4 py-2 rounded-full font-bold  text-darkGrey"
           value="Log in"
         />
       </form>

@@ -23,13 +23,14 @@ const reducer = (state, action) => {
       newListing1.peopleJoined = newJoined1;
       return { ...state, listing: newListing1 };
     case "SET_LISTING":
-      return { ...state, listing: payload };
+      return { ...state, listing: payload, search: "" };
     case "SET_LISTINGS":
       return { ...state, listings: payload };
     case "SET_SEARCH":
       return { ...state, search: payload };
     case "SET_ALERT":
       let newAlerts = state.alerts;
+      window.scrollTo({ top: 0, behavior: "smooth" });
       newAlerts.push({ id: payload.id, type: payload.type, msg: payload.msg });
       return {
         ...state,
@@ -41,7 +42,7 @@ const reducer = (state, action) => {
     case "SET_USER":
       return { ...state, user: payload, listing: null };
     case "CLEAR_USER":
-      return { ...state, user: null, listing: null, listings: null };
+      return { ...state, user: null, listing: null };
     default:
       return state;
   }

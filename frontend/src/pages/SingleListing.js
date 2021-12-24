@@ -58,12 +58,14 @@ const SingleListing = ({
             {listing.amountOfPeopleNeeded - listing.peopleJoined.length + 1}
           </span>
         </p>
-        <p className="font-bold flex flex-col md:inline text-xl md:text-3xl text-darkGrey justify-center items-center space-y-2">
-          <span className="text-black">Remarks:</span>
-          <span className="bg-yellow md:ml-3 py-2 px-4 rounded-full">
-            {listing.remarks}
-          </span>
-        </p>
+        {listing && listing.remarks && (
+          <p className="font-bold flex flex-col md:inline text-xl md:text-3xl text-darkGrey justify-center items-center space-y-2">
+            <span className="text-black">Remarks:</span>
+            <span className="bg-yellow md:ml-3 py-2 px-4 rounded-full">
+              {listing.remarks}
+            </span>
+          </p>
+        )}
       </div>
       <div
         className="bg-gray-300 mt-10 text-siena rounded-3xl space-y-6 md:space-y-12  py-6 px-8 md:py-10 md:px-16 flex flex-col justify-start items-center"
@@ -83,26 +85,34 @@ const SingleListing = ({
         </div>
 
         <div className="md:flex md:flex-row md:space-x-10  flex flex-col">
-          {listing.peopleJoined.map((person) => {
-            return (
-              <div
-                key={person._id}
-                className="flex flex-col items-center justify-center space-y-3"
-              >
-                <img
-                  src={person.avatar || avatar}
-                  alt="avatar img"
-                  className="w-28 h-28"
-                />
-                <div className="relative">
-                  <p className="font-bold text-2xl">{person.username}</p>
-                  {person._id === listing.user._id && (
-                    <p className="font-bold text-darkGrey text-sm">(host)</p>
-                  )}
+          {listing && listing.peopleJoined.length > 0 ? (
+            listing.peopleJoined.map((person) => {
+              return (
+                <div
+                  key={person._id}
+                  className="flex flex-col items-center justify-center space-y-3"
+                >
+                  <img
+                    src={person.avatar || avatar}
+                    alt="avatar img"
+                    className="w-28 h-28"
+                  />
+                  <div className="md:relative md:block flex justify-center items-center space-x-2">
+                    <p className="font-bold text-2xl">{person.username}</p>
+                    {person._id === listing.user._id && (
+                      <p className="font-bold text-darkGrey md:absolute md:left-1/2 md:transform md:-translate-x-1/2 text-sm">
+                        (host)
+                      </p>
+                    )}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+          ) : (
+            <p className="font-bold text-xl text-black">
+              No one has participated yet
+            </p>
+          )}
         </div>
       </div>
     </>

@@ -9,7 +9,6 @@ const Context = ({ children }) => {
   React.useEffect(() => console.log(state), [state]);
 
   const loadUser = useCallback(async () => {
-    console.log("loading in user now...");
     try {
       const response = await axios.get("/api/auth/user");
       if (response.status === 200) {
@@ -20,18 +19,35 @@ const Context = ({ children }) => {
     }
   }, []);
 
+  const searchFunc = async (query, type) => {
+    try {
+      const config = {
+        headers: { "Content-Type": "application/json" },
+      };
+      const body = JSON.stringify({ query: state.search, type: type });
+      const response = await axios.post("/api/listing/search", body, config);
+      dispatch({ type: "SET_LISTINGS", payload: response.data });
+    } catch (error) {
+      console.log(error.response);
+      error.response.data.errors.forEach((error) => {
+        setAlert("danger", error.msg);
+      });
+      console.error(error, "herre");
+    }
+  };
+
   const continueGoogle = async (history) => {
-    console.log("logging in with google now");
     try {
       const loginURL = "http://localhost:5000/api/auth/google";
       let newWindow = window.open(loginURL, "_blank", "width=500,height=600");
       if (newWindow) {
         let timer = setInterval(async () => {
           if (newWindow.closed) {
-            console.log("we are authenticated with google");
-            const response = await axios.get("/api/auth/user");
-            setAlert("success", `Welcome ${response.data.username}`);
-            history.push("/");
+            setTimeout(async () => {
+              const response = await axios.get("/api/auth/user");
+              setAlert("success", `Welcome ${response.data.username}`);
+              history.push("/");
+            }, 100);
             if (timer) clearInterval(timer);
             return;
           }
@@ -186,6 +202,7 @@ const Context = ({ children }) => {
         logout,
         loginUser,
         state,
+        searchFunc,
         dispatch,
         setAlert,
         continueGoogle,

@@ -37,6 +37,7 @@ const CreateListing = () => {
           value={location}
           onChange={change}
         >
+          <option value="0">Please select a location</option>
           {facilities.map((facil, index) => {
             const place = facil.split("\n")[0];
             return <option value={facil}>{place}</option>;
@@ -62,7 +63,7 @@ const CreateListing = () => {
         />
         <input
           className="create-input focus:border-opacity-10 w-full  rounded-lg md:border-4 border-2 border-yellow py-2 px-4 text-darkGrey font-bold text-xl placeholder-anothershadeofgrey"
-          placeholder="How many more people do you need?"
+          placeholder="People needed"
           type="number"
           min="1"
           name="slotsLeft"
@@ -74,7 +75,6 @@ const CreateListing = () => {
           className="create-input focus:border-opacity-10 w-full  rounded-lg md:border-4 border-2 border-yellow py-2 px-4 text-darkGrey font-bold text-xl placeholder-anothershadeofgrey"
           placeholder="Remarks"
           type="text"
-          required
           min="1"
           name="remarks"
           value={remarks}
