@@ -34,30 +34,34 @@ router.post(
 
 router.post("/search", async (req, res) => {
   try {
-    const query = req.body.query.trim().toLowerCase();
-    const type = req.body.type.trim().toLowerCase();
+    const query = req.body.query.trim();
+    const type = req.body.type.trim();
+    console.log(query);
     let filtered;
-    switch (type) {
-      case "sport":
-        filtered = await Listing.find({
-          sport: { $regex: query, $options: "i" },
-        });
-        console.log("in sport: ");
-      case "both":
-        filtered = await Listing.find({
-          $or: [
-            { sport: query, $options: "i" },
-            { location: { $regex: ".*" + query + ".*", $options: "i" } },
-          ],
-        });
-        console.log("in both: ");
-
-      case "location":
-        filtered = await Listing.find({
-          location: { $regex: query, $options: "i" },
-        });
-        console.log("in location: ");
+    if (type === "sport") {
+      // filtered = await Listing.find({
+      //   sport: { $regex: query, $options: "i" },
+      // });
+      filtered = await Listing.find({
+        sport: { $regex: ".*" + query + ".*", $options: "i" },
+        // sport: { $regex: query, $options: "i" },
+      });
+      console.log("in sport: ");
+    } else if (type === "both") {
+      filtered = await Listing.find({
+        $or: [
+          { sport: query, $options: "i" },
+          { location: { $regex: ".*" + query + ".*", $options: "i" } },
+        ],
+      });
+      console.log("in both: ");
+    } else if (type === "location") {
+      filtered = await Listing.find({
+        location: { $regex: ".*" + query + ".*", $options: "i" },
+      });
+      console.log("in location: ");
     }
+    // console.log(filtered);
 
     return res.json(filtered);
   } catch (error) {

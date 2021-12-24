@@ -1,5 +1,6 @@
 import React from "react";
 import { useGlobalContext } from "../context";
+import { FiSearch } from "react-icons/fi";
 
 const Search = () => {
   const { searchFunc } = useGlobalContext();
@@ -22,7 +23,12 @@ const Search = () => {
         searchFunc(query, type);
       }}
     >
-      <select name="type" value={type} onChange={change}>
+      <select
+        name="type"
+        value={type}
+        className="py-2 px-4 bg-siena font-bold text-white   rounded-full"
+        onChange={change}
+      >
         <option value="both">Filter by</option>
         <option value="sport">Sport</option>
         <option value="location">Location</option>
@@ -30,16 +36,20 @@ const Search = () => {
       <input
         className="rounded-full py-3 px-6 font-bold text-2xl text-darkGrey bg-anothershadeofgrey max-w-xs"
         type="text"
+        placeholder="Search"
         name="query"
         onChange={change}
         value={query}
       />
-      <input
-        type="submit"
-        value="Search!"
-        className="bg-siena md:py-3 md:px-6 text-white py-2 font-bold md:text-2xl text-xl rounded-sm px-4"
+      <button
+        className="bg-siena md:py-3 md:px-6 text-white py-2 font-bold md:text-4xl text-3xl rounded-sm px-4"
         style={{ borderRadius: "40px" }}
-      />
+        onClick={() => {
+          searchFunc(query, type);
+        }}
+      >
+        <FiSearch />
+      </button>
     </form>
   );
 };

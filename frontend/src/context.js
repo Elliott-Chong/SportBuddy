@@ -24,7 +24,7 @@ const Context = ({ children }) => {
       const config = {
         headers: { "Content-Type": "application/json" },
       };
-      const body = JSON.stringify({ query: state.search, type: type });
+      const body = JSON.stringify({ query, type });
       const response = await axios.post("/api/listing/search", body, config);
       dispatch({ type: "SET_LISTINGS", payload: response.data });
     } catch (error) {

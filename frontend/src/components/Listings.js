@@ -33,7 +33,7 @@ const Listings = () => {
           })
         ) : (
           <h1 className="font-bold md:text-2xl text-xl text-center">
-            No listings for now... Check back later!
+            No listings found
           </h1>
         )}
       </section>
