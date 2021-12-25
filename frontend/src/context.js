@@ -25,6 +25,7 @@ const Context = ({ children }) => {
         headers: { "Content-Type": "application/json" },
       };
       const body = JSON.stringify({ query, type });
+      dispatch({ type: "START_LOADING" });
       const response = await axios.post("/api/listing/search", body, config);
       dispatch({ type: "SET_LISTINGS", payload: response.data });
     } catch (error) {
@@ -119,6 +120,7 @@ const Context = ({ children }) => {
 
   const fetchListings = useCallback(async () => {
     try {
+      dispatch({ type: "START_LOADING" });
       const response = await axios.get("/api/listing");
       dispatch({ type: "SET_LISTINGS", payload: response.data });
     } catch (error) {

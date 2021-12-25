@@ -1,7 +1,9 @@
 const router = require("express").Router();
 const Listing = require("../models/Listing");
 const { body, validationResult } = require("express-validator");
-
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 router.post(
   "/",
   body("location", "Location is required").not().isEmpty(),
@@ -36,7 +38,6 @@ router.post("/search", async (req, res) => {
   try {
     const query = req.body.query.trim();
     const type = req.body.type.trim();
-    console.log(query);
     let filtered;
     if (type === "sport") {
       // filtered = await Listing.find({
@@ -46,7 +47,6 @@ router.post("/search", async (req, res) => {
         sport: { $regex: ".*" + query + ".*", $options: "i" },
         // sport: { $regex: query, $options: "i" },
       });
-      console.log("in sport: ");
     } else if (type === "both") {
       filtered = await Listing.find({
         $or: [
@@ -54,15 +54,15 @@ router.post("/search", async (req, res) => {
           { location: { $regex: ".*" + query + ".*", $options: "i" } },
         ],
       });
-      console.log("in both: ");
     } else if (type === "location") {
       filtered = await Listing.find({
         location: { $regex: ".*" + query + ".*", $options: "i" },
       });
-      console.log("in location: ");
     }
+
     // console.log(filtered);
 
+    await sleep(500);
     return res.json(filtered);
   } catch (error) {
     return res.status(400).json({ errors: { msg: "Server Error at like 45" } });
@@ -72,6 +72,7 @@ router.post("/search", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     let listings = await Listing.find();
+    await sleep(500);
     return res.json(listings);
   } catch (error) {
     res.status(400).json({ errors: { msg: "Server Error in line 41" } });

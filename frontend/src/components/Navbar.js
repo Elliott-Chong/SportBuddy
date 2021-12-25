@@ -27,12 +27,14 @@ const Navbar = () => {
   };
   const {
     logout,
+    fetchListings,
     state: { user },
   } = useGlobalContext();
   return (
     <>
       <nav className="my-10 mx-5 flex px-10 z-20 absolute py-1  w-full   font-custom">
         <Link
+          onClick={fetchListings}
           className="font-custom font-bold text-siena text-5xl items-center my-auto"
           to="/"
         >

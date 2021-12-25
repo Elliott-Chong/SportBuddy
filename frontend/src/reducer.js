@@ -1,7 +1,7 @@
 const initialState = {
-  search: "",
   alerts: [],
   user: null,
+  loading: false,
   listings: [],
   listing: null,
 };
@@ -9,6 +9,8 @@ const initialState = {
 const reducer = (state, action) => {
   const { type, payload } = action;
   switch (type) {
+    case "START_LOADING":
+      return { ...state, loading: true };
     case "JOIN_ROOM":
       let newJoined = state.listing.peopleJoined;
       newJoined.push(state.user);
@@ -25,7 +27,7 @@ const reducer = (state, action) => {
     case "SET_LISTING":
       return { ...state, listing: payload, search: "" };
     case "SET_LISTINGS":
-      return { ...state, listings: payload };
+      return { ...state, listings: payload, loading: false };
     case "SET_SEARCH":
       return { ...state, search: payload };
     case "SET_ALERT":

@@ -8,9 +8,7 @@ const Search = () => {
     query: "",
     type: "both",
   });
-  React.useEffect(() => {
-    console.log(formData);
-  }, [formData]);
+
   const change = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -26,7 +24,7 @@ const Search = () => {
       <select
         name="type"
         value={type}
-        className="py-2 px-4 bg-siena font-bold text-white   rounded-full"
+        className="py-2 px-4 bg-siena md:text-xl text-lg font-bold text-white   rounded-full"
         onChange={change}
       >
         <option value="both">Filter by</option>
@@ -41,15 +39,15 @@ const Search = () => {
         onChange={change}
         value={query}
       />
-      <button
-        className="bg-siena md:py-3 md:px-6 text-white py-2 font-bold md:text-4xl text-3xl rounded-sm px-4"
+      <input
+        type="submit"
+        value="Go"
+        className="bg-siena md:py-3 md:px-6 text-white py-2 font-bold md:text-2xl text-xl rounded-sm px-4"
         style={{ borderRadius: "40px" }}
         onClick={() => {
           searchFunc(query, type);
         }}
-      >
-        <FiSearch />
-      </button>
+      />
     </form>
   );
 };
