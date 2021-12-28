@@ -7,6 +7,7 @@ const Navbar = () => {
   const sidebarRef = React.useRef();
   const [ham, setHam] = React.useState(true);
   const back = () => {
+    if (ham) return;
     setTimeout(() => hamRef.current.classList.toggle("active"), 300);
     hamRef.current.classList.toggle("rotate");
     sidebarRef.current.classList.toggle("active");
@@ -28,13 +29,18 @@ const Navbar = () => {
   const {
     logout,
     fetchListings,
+    dispatch,
     state: { user },
   } = useGlobalContext();
   return (
     <>
       <nav className="my-10 mx-5 flex px-10 z-20 absolute py-1  w-full   font-custom">
         <Link
-          onClick={fetchListings}
+          onClick={() => {
+            fetchListings();
+            dispatch({ type: "CLEAR_SEARCH" });
+            back();
+          }}
           className="font-custom font-bold text-siena text-5xl items-center my-auto"
           to="/"
         >

@@ -14,6 +14,20 @@ const UserSchema = new mongoose.Schema({
     type: String,
   },
 
+  chat: [
+    {
+      message: {
+        type: String,
+        required: true,
+      },
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
+        required: true,
+      },
+    },
+  ],
+
   dateOfMeet: {
     type: Date,
     required: true,

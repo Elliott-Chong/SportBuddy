@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Listing = require("../models/Listing");
 const { body, validationResult } = require("express-validator");
+const FAUX_WAIT = 500;
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -40,17 +41,16 @@ router.post("/search", async (req, res) => {
     const type = req.body.type.trim();
     let filtered;
     if (type === "sport") {
-      // filtered = await Listing.find({
-      //   sport: { $regex: query, $options: "i" },
-      // });
       filtered = await Listing.find({
         sport: { $regex: ".*" + query + ".*", $options: "i" },
-        // sport: { $regex: query, $options: "i" },
       });
     } else if (type === "both") {
       filtered = await Listing.find({
         $or: [
-          { sport: query, $options: "i" },
+          {
+            sport: { $regex: ".*" + query + ".*", $options: "i" },
+            $options: "i",
+          },
           { location: { $regex: ".*" + query + ".*", $options: "i" } },
         ],
       });
@@ -60,19 +60,39 @@ router.post("/search", async (req, res) => {
       });
     }
 
-    // console.log(filtered);
-
-    await sleep(500);
+    await sleep(Math.random() * FAUX_WAIT);
     return res.json(filtered);
   } catch (error) {
     return res.status(400).json({ errors: { msg: "Server Error at like 45" } });
   }
 });
 
+router.post("/chat/:id", async (req, res) => {
+  const { message } = req.body;
+  if (!message) return res.send("ok");
+  try {
+    const listing = await Listing.findById(req.params.id);
+    if (!listing)
+      return res.status(400).json({ errors: [{ msg: "No listing found" }] });
+    let newListingChat = listing.chat;
+    newListingChat.push({ user: req.user.id, message: message });
+    listing.chat = newListingChat;
+    await listing.save();
+    return res.json({ user: req.user, message: message });
+  } catch (error) {
+    if (error.kind === "ObjectId")
+      return res.status(400).json([{ errors: ["Invalid listing ID"] }]);
+    else console.log(error);
+    return res
+      .status(400)
+      .json({ errors: [{ msg: "Server Error in line 59" }] });
+  }
+});
+
 router.get("/", async (req, res) => {
   try {
     let listings = await Listing.find();
-    await sleep(500);
+    await sleep(Math.random() * FAUX_WAIT);
     return res.json(listings);
   } catch (error) {
     res.status(400).json({ errors: { msg: "Server Error in line 41" } });
@@ -83,7 +103,8 @@ router.get("/:id", async (req, res) => {
   try {
     const listing = await Listing.findById(req.params.id)
       .populate("user")
-      .populate("peopleJoined");
+      .populate("peopleJoined")
+      .populate("chat.user");
     if (!listing)
       return res.status(400).json({ errors: [{ msg: "Listing not found" }] });
     return res.json(listing);
@@ -102,6 +123,9 @@ router.get("/join/:id", async (req, res) => {
     const listing = await Listing.findById(req.params.id);
     if (!listing)
       return res.status(400).json({ errors: [{ msg: "Listing not found" }] });
+    if (listing.peopleJoined.length - 1 === listing.amountOfPeopleNeeded) {
+      return res.status(400).json({ errors: [{ msg: "No slots left!" }] });
+    }
     let newPeople = listing.peopleJoined;
     newPeople = newPeople.filter(
       (person) => person._id.toString() !== req.user._id.toString()

@@ -13,6 +13,21 @@ body.active {
   font-size: 1.3rem;
 }
 
+#msg::placeholder {
+  font-size: 1.2rem;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+#chat::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+#chat {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
 #sidebar {
   transition: all 500ms ease;
 }

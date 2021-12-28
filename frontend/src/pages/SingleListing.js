@@ -1,5 +1,6 @@
 import React from "react";
 import Moment from "react-moment";
+import { Link } from "react-router-dom";
 import { useGlobalContext } from "../context";
 import avatar from "../images/avatar-round.png";
 import Spinner from "../images/loading.gif";
@@ -66,6 +67,12 @@ const SingleListing = ({
             </span>
           </p>
         )}
+        <Link
+          to={`/chat/${id}`}
+          className={`bg-siena py-2 px-4 shadow-lg rounded-xl font-bold text-xl text-white hover:bg-yellow hover:text-siena transition-all duration-300`}
+        >
+          Chat Room
+        </Link>
       </div>
       <div
         className="bg-gray-300 mt-10 text-siena rounded-3xl space-y-6 md:space-y-12  py-6 px-8 md:py-10 md:px-16 flex flex-col justify-start items-center"
@@ -77,14 +84,14 @@ const SingleListing = ({
           <span>
             <button
               onClick={() => joinRoom(id)}
-              className={`bg-siena py-2 px-4 rounded-xl font-bold text-xl text-white hover:bg-yellow hover:text-siena transition-all duration-300`}
+              className={`bg-siena py-2 px-4 rounded-xl font-bold shadow-lg text-xl text-white hover:bg-yellow hover:text-siena transition-all duration-300`}
             >
               {`${hasJoined ? "Joined" : "Join"}`}
             </button>
           </span>
         </div>
 
-        <div className="md:flex md:flex-row md:space-x-10  flex flex-col">
+        <div className="md:flex md:flex-row md:space-x-10 md:space-y-0 space-y-10 flex flex-col">
           {listing && listing.peopleJoined.length > 0 ? (
             listing.peopleJoined.map((person) => {
               return (
@@ -95,9 +102,9 @@ const SingleListing = ({
                   <img
                     src={person.avatar || avatar}
                     alt="avatar img"
-                    className="w-28 h-28"
+                    className="w-28 h-28 rounded-full"
                   />
-                  <div className="md:relative md:block flex justify-center items-center space-x-2">
+                  <div className="md:relative md:block flex justify-center items-center md:space-x-0 space-x-2">
                     <p className="font-bold text-2xl">{person.username}</p>
                     {person._id === listing.user._id && (
                       <p className="font-bold text-darkGrey md:absolute md:left-1/2 md:transform md:-translate-x-1/2 text-sm">

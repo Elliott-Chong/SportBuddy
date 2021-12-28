@@ -37,7 +37,7 @@ const Login = () => {
         <input
           onChange={onChange}
           type="text"
-          className="border-4 border-yellow font-bold  pt-2 py-2 px-5 w-full rounded-full font-xl"
+          className="border-4 border-yellow font-bold  pt-2 py-2 px-5 max-w-xl w-full rounded-full font-xl"
           name="email"
           id="email"
           placeholder="Email"
@@ -46,7 +46,7 @@ const Login = () => {
           type="password"
           onChange={onChange}
           name="password"
-          className="border-4 border-yellow pt-2 py-2 font-bold px-5 w-full rounded-full font-xl"
+          className="border-4 border-yellow pt-2 py-2 font-bold px-5 max-w-xl w-full rounded-full font-xl"
           id="password"
           placeholder="Password"
         />

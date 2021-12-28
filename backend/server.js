@@ -5,6 +5,10 @@ const initialisePassport = require("./config/passport-config");
 const config = require("config");
 const session = require("express-session");
 const app = express();
+const http = require("http");
+const server = http.createServer(app);
+const socketio = require("socket.io");
+const io = socketio(server);
 const PORT = 5000;
 
 app.use((req, res, next) => {
@@ -39,11 +43,22 @@ connectDB();
 
 app.get("/", (req, res) => res.send("SportBuddy api running"));
 
+io.on("connection", (socket) => {
+  console.log("user connected");
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
+  socket.on("new message", (data) => {
+    console.log("emitting in server");
+    io.emit("new message", data);
+  });
+});
+
 app.use("/api/auth", require("./routes/auth"));
 // app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/listing", require("./routes/listing"));
 // app.use("/api/profile", require("./routes/api/profile"));
 
-app.listen(process.env.PORT || PORT, () =>
+server.listen(process.env.PORT || PORT, () =>
   console.log("Server Running on http://localhost:5000")
 );

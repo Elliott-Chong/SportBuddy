@@ -3,12 +3,18 @@ const initialState = {
   user: null,
   loading: false,
   listings: [],
+  search: { query: "", type: "both" },
   listing: null,
 };
 
 const reducer = (state, action) => {
   const { type, payload } = action;
   switch (type) {
+    case "SET_SEARCH":
+      return {
+        ...state,
+        search: { ...state.search, [payload.name]: payload.value },
+      };
     case "START_LOADING":
       return { ...state, loading: true };
     case "JOIN_ROOM":
@@ -26,10 +32,22 @@ const reducer = (state, action) => {
       return { ...state, listing: newListing1 };
     case "SET_LISTING":
       return { ...state, listing: payload, search: "" };
+    case "CLEAR_SEARCH":
+      return { ...state, search: { query: "", type: "both" } };
     case "SET_LISTINGS":
-      return { ...state, listings: payload, loading: false };
-    case "SET_SEARCH":
-      return { ...state, search: payload };
+      return {
+        ...state,
+        listings: payload,
+        loading: false,
+      };
+
+    case "ADD_CHAT":
+      console.log("reducer beuing called in add caht");
+      let newChat = state.listing.chat;
+      newChat.push({ user: payload.user, message: payload.message });
+      let copyListing = state.listing;
+      copyListing.chat = newChat;
+      return { ...state, listing: copyListing };
     case "SET_ALERT":
       let newAlerts = state.alerts;
       window.scrollTo({ top: 0, behavior: "smooth" });

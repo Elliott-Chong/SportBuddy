@@ -28,7 +28,8 @@ const IndividualListing = ({
           className=" bg-yellow py-2 px-2 rounded-full  font-custom"
         >
           <p className="inline-block text-center font-custom text-darkGrey font-semibold md:text-2xl text-xl px-4">
-            {slotsLeft - peopleJoinedLength + 1} slots
+            {slotsLeft - peopleJoinedLength + 1} slot
+            {slotsLeft - peopleJoinedLength > 0 && "s"}
           </p>
         </Link>
       </div>

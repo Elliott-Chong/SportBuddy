@@ -65,7 +65,7 @@ const Context = ({ children }) => {
       type: "SET_ALERT",
       payload: { type, msg, id },
     });
-    setTimeout(() => dispatch({ type: "REMOVE_ALERT", payload: { id } }), 3000);
+    setTimeout(() => dispatch({ type: "REMOVE_ALERT", payload: { id } }), 2000);
   };
   // Authenticate User
   const loginUser = async (email, password, history) => {
@@ -161,6 +161,33 @@ const Context = ({ children }) => {
     }
   };
 
+  const enter = async (message, socket) => {
+    try {
+      const config = {
+        headers: { "Content-Type": "application/json" },
+      };
+      const body = JSON.stringify({ message });
+      const response = await axios.post(
+        `/api/listing/chat/${state.listing._id}`,
+        body,
+        config
+      );
+
+      if (!message) return;
+
+      socket.emit("new message", {
+        user: response.data.user,
+        message: message,
+      });
+    } catch (error) {
+      console.log(error.response);
+      error.response.data.errors.forEach((error) => {
+        setAlert("danger", error.msg);
+      });
+      console.error(error);
+    }
+  };
+
   const createListing = async (
     location,
     date,
@@ -203,6 +230,7 @@ const Context = ({ children }) => {
         joinRoom,
         logout,
         loginUser,
+        enter,
         state,
         searchFunc,
         dispatch,

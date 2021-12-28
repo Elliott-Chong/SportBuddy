@@ -10,6 +10,7 @@ import PrivateRoute from "./components/PrivateRoute";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Chat from "./pages/Chat";
 import GoogleLoginSuccess from "./pages/GoogleLoginSuccess";
 import SingleListing from "./pages/SingleListing";
 import CreateListing from "./pages/CreateListing";
@@ -56,6 +57,7 @@ function App() {
           />
           <PrivateRoute path="/listing/:id" exact component={SingleListing} />
           <PrivateRoute path="/create" exact component={CreateListing} />
+          <PrivateRoute path="/chat/:id" exact component={Chat} />
         </Switch>
       </main>
     </>

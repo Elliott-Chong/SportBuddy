@@ -44,7 +44,7 @@ const Register = () => {
           value={username}
           onChange={onChange}
           type="text"
-          className="border-4 border-yellow font-bold w-full pt-2 py-2 px-5 rounded-full font-xl"
+          className="border-4 max-w-xl border-yellow font-bold w-full pt-2 py-2 px-5 rounded-full font-xl"
           name="username"
           id="username"
           placeholder="Username"
@@ -53,7 +53,7 @@ const Register = () => {
           value={email}
           onChange={onChange}
           type="text"
-          className="border-4 border-yellow font-bold w-full  pt-2 py-2 px-5 rounded-full font-xl"
+          className="border-4 border-yellow font-bold w-full max-w-xl  pt-2 py-2 px-5 rounded-full font-xl"
           name="email"
           id="email"
           placeholder="Email"
@@ -62,7 +62,7 @@ const Register = () => {
           type="password"
           value={password}
           name="password"
-          className="border-4 border-yellow pt-2 py-2 w-full font-bold px-5 rounded-full font-xl"
+          className="border-4 border-yellow pt-2 py-2 w-full max-w-xl font-bold px-5 rounded-full font-xl"
           id="password"
           onChange={onChange}
           placeholder="Password"
@@ -71,7 +71,7 @@ const Register = () => {
           type="password"
           name="password2"
           value={password2}
-          className="border-4 border-yellow pt-2 py-2 w-full font-bold px-5 rounded-full font-xl"
+          className="border-4 border-yellow pt-2 py-2 w-full max-w-xl font-bold px-5 rounded-full font-xl"
           id="password2"
           onChange={onChange}
           placeholder="Confirm Password"
