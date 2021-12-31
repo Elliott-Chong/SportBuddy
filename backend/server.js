@@ -9,7 +9,7 @@ const http = require("http");
 const server = http.createServer(app);
 const socketio = require("socket.io");
 const io = socketio(server);
-const PORT = 5000;
+const PORT = 5001;
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
@@ -41,7 +41,7 @@ app.use(passport.session());
 
 connectDB();
 
-app.get("/", (req, res) => res.send("SportBuddy api running"));
+app.get("/", (req, res) => res.send("SportBuddy api running updated"));
 
 io.on("connection", (socket) => {
   console.log("user connected");
@@ -54,10 +54,8 @@ io.on("connection", (socket) => {
 });
 
 app.use("/api/auth", require("./routes/auth"));
-// app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/listing", require("./routes/listing"));
-// app.use("/api/profile", require("./routes/api/profile"));
 
 server.listen(process.env.PORT || PORT, () =>
-  console.log("Server Running on http://localhost:5000")
+  console.log("Server Running on http://localhost:5001")
 );

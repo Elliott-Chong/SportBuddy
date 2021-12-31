@@ -92,10 +92,10 @@ router.post("/chat/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     let listings = await Listing.find();
-    await sleep(Math.random() * FAUX_WAIT);
     return res.json(listings);
+    await sleep(Math.random() * FAUX_WAIT);
   } catch (error) {
-    res.status(400).json({ errors: { msg: "Server Error in line 41" } });
+    return res.status(400).json({ errors: { msg: "Server Error in line 41" } });
   }
 });
 
