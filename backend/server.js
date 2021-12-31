@@ -49,7 +49,6 @@ io.on("connection", (socket) => {
     console.log("user disconnected");
   });
   socket.on("new message", (data) => {
-    console.log("emitting in server");
     io.emit("new message", data);
   });
 });
