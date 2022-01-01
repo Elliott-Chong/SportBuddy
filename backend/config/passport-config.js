@@ -50,9 +50,11 @@ const initialisePassport = (passport) => {
   );
   passport.use(new LocalStrategy({ usernameField: "email" }, authenticateUser));
   passport.serializeUser((user, done) => {
+    console.log('it serialises')
     done(null, user.id);
   });
   passport.deserializeUser(async (id, done) => {
+    console.log('does it deserialise?')
     const user = await User.findById(id);
     done(null, user);
   });
