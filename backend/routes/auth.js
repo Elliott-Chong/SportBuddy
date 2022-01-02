@@ -85,6 +85,8 @@ router.post(
   loginMiddleware,
   passport.authenticate("local"),
   (req, res) => {
+    console.log('req headers are:', req.headers)
+    console.log('res headers are:', res.getHeaders())
     return res.json(req.user);
   }
 );
