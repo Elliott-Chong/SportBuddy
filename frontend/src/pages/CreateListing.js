@@ -40,7 +40,11 @@ const CreateListing = () => {
           <option value="0">Please select a location</option>
           {facilities.map((facil, index) => {
             const place = facil.split("\n")[0];
-            return <option value={facil}>{place}</option>;
+            return (
+              <option key={index} value={facil}>
+                {place}
+              </option>
+            );
           })}
         </select>
         <input

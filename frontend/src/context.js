@@ -10,10 +10,14 @@ const Context = ({ children }) => {
 
   const loadUser = useCallback(async () => {
     try {
-      const response = await axios.get("/api/auth/user");
-      if (response.status === 200) {
-        dispatch({ type: "SET_USER", payload: response.data });
+      const token = localStorage.getItem("token");
+      if (token) {
+        axios.defaults.headers.common["x-auth-token"] = token;
+      } else {
+        delete axios.defaults.headers.common["x-auth-token"];
       }
+      const response = await axios.get("/api/auth/user");
+      dispatch({ type: "SET_USER", payload: response.data });
     } catch (error) {
       dispatch({ type: "CLEAR_USER" });
     }
@@ -75,13 +79,14 @@ const Context = ({ children }) => {
     const body = JSON.stringify({ email, password });
     try {
       const response = await axios.post("/api/auth/login", body, config);
-      dispatch({ type: "SET_USER", payload: response.data });
-      setAlert("success", `Welcome ${response.data.username}!`);
+      dispatch({ type: "SET_TOKEN", payload: response.data.token });
+      // setAlert("success", `Welcome ${response.data.username}!`);
       history.push("/");
     } catch (error) {
       if (error.response.status === 401) {
         return setAlert("danger", "Invalid Credentials");
       }
+      console.log(error.response);
       error.response.data.errors.forEach((error) => {
         setAlert("danger", error.msg);
       });
@@ -89,8 +94,7 @@ const Context = ({ children }) => {
     }
   };
 
-  const logout = async () => {
-    await axios.get("/api/auth/logout");
+  const logout = () => {
     dispatch({ type: "CLEAR_USER" });
     setAlert("success", "Logged Out!");
   };
@@ -106,8 +110,9 @@ const Context = ({ children }) => {
     };
     const body = JSON.stringify({ email, username, password, password2 });
     try {
-      await axios.post("/api/auth/register", body, config);
+      const response = await axios.post("/api/auth/register", body, config);
       setAlert("success", "Account Created!");
+      dispatch({ type: "SET_TOKEN", payload: response.data.token });
       loadUser();
       history.push("/login");
     } catch (error) {

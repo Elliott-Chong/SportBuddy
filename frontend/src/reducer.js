@@ -3,6 +3,7 @@ const initialState = {
   user: null,
   loading: false,
   listings: [],
+  token: localStorage.getItem("token"),
   search: { query: "", type: "both" },
   listing: null,
 };
@@ -59,10 +60,14 @@ const reducer = (state, action) => {
     case "REMOVE_ALERT":
       let newAlertss = state.alerts.filter((alert) => alert.id !== payload.id);
       return { ...state, alerts: newAlertss };
+    case "SET_TOKEN":
+      localStorage.setItem("token", payload);
+      return { ...state, token: payload };
     case "SET_USER":
-      return { ...state, user: payload, listing: null };
+      return { ...state, user: payload };
     case "CLEAR_USER":
-      return { ...state, user: null, listing: null };
+      localStorage.removeItem("token");
+      return { ...state, user: null, listing: null, token: null };
     default:
       return state;
   }
