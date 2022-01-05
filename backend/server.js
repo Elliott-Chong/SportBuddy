@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require('cors')
+const cors = require("cors");
 const connectDB = require("./config/db");
 const passport = require("passport");
 const initialisePassport = require("./config/passport-config");
@@ -13,8 +13,7 @@ const io = socketio(server);
 const PORT = 5001;
 app.use(
   cors({
-    credentials: true,
-    origin: "https://sportbuddy-elle.netlify.app",
+    origin: "*",
   })
 );
 // app.use((req, res, next) => {
@@ -41,8 +40,6 @@ app.use(
     secret: config.get("session_secret"),
     resave: false,
     saveUninitialized: false,
-    
-    
   })
 );
 app.use(passport.initialize());

@@ -2,11 +2,13 @@ const router = require("express").Router();
 const Listing = require("../models/Listing");
 const { body, validationResult } = require("express-validator");
 const FAUX_WAIT = 500;
+const auth = require("../middleware/auth");
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 router.post(
   "/",
+  auth,
   body("location", "Location is required").not().isEmpty(),
   body("date", "Date is required").not().isEmpty().isDate(),
   body("sport", "Sport is required").not().isEmpty(),
@@ -67,7 +69,7 @@ router.post("/search", async (req, res) => {
   }
 });
 
-router.post("/chat/:id", async (req, res) => {
+router.post("/chat/:id", auth, async (req, res) => {
   const { message } = req.body;
   if (!message) return res.send("ok");
   try {
@@ -118,7 +120,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.get("/join/:id", async (req, res) => {
+router.get("/join/:id", auth, async (req, res) => {
   try {
     const listing = await Listing.findById(req.params.id);
     if (!listing)
@@ -128,7 +130,7 @@ router.get("/join/:id", async (req, res) => {
     }
     let newPeople = listing.peopleJoined;
     newPeople = newPeople.filter(
-      (person) => person._id.toString() !== req.user._id.toString()
+      (person) => person._id.toString() !== req.user.id.toString()
     );
     if (newPeople.length === listing.peopleJoined.length) {
       newPeople.push(req.user._id);
@@ -143,6 +145,7 @@ router.get("/join/:id", async (req, res) => {
   } catch (error) {
     if (error.kind === "ObjectId")
       return res.status(400).json([{ errors: ["Invalid listing ID"] }]);
+    console.log(error);
     return res
       .status(400)
       .json({ errors: [{ msg: "Server Error in line 68" }] });
