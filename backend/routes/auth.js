@@ -2,8 +2,20 @@ const router = require("express").Router();
 const User = require("../models/User");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
+const jwt = require('jsonwebtoken')
 const { body, validationResult } = require("express-validator");
 const elleError = (err) => console.log("Elle there is a error: ", err);
+const auth = (req, res, next) => {
+  const token = req.header('x-auth-token')  
+  if (!token) return res.status(401).send('no token')
+  try {
+    const decoded = jwt.verify(token, config.get('jwt_secret')) 
+    req.user = decoded.user
+    next()
+  } catch (error) {
+    res.status(401) .send("Invalid token")
+  }
+}
 router.post(
   "/register",
   body("username", "Username is required").not().isEmpty(),
@@ -40,7 +52,10 @@ router.post(
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(password, salt);
       await user.save();
-      return res.send("User Registered");
+      const payload = {
+        user: user.id
+      }
+      jwt.sign(payload,config.get('jwt_secret'),{expiresIn:36000000},(err,token)=>{if(err){throw err}; return res.json({token})})
     } catch (error) {
       elleError(error);
     }
