@@ -13,7 +13,7 @@ const Chat = ({ match }) => {
     fetchSingleListing,
     state: { listing },
   } = useGlobalContext();
-  const ENDPOINT = "http://localhost:5001";
+  const ENDPOINT = "http://192.168.50.74:5000";
   const [message, setMessage] = React.useState("");
   const socketRef = React.useRef();
   const {

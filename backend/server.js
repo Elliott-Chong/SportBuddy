@@ -7,14 +7,14 @@ const config = require("config");
 const session = require("express-session");
 const app = express();
 const http = require("http");
-    const server = http.createServer(app);
+const server = http.createServer(app);
 const socketio = require("socket.io");
 const io = socketio(server);
 const PORT = 5001;
 app.use(
   cors({
-    origin: "https://sportbuddy-elle.netlify.app",
     credentials: true,
+    origin: "https://sportbuddy-elle.netlify.app",
   })
 );
 // app.use((req, res, next) => {
@@ -41,8 +41,8 @@ app.use(
     secret: config.get("session_secret"),
     resave: false,
     saveUninitialized: false,
-    cookie: {
-    }
+    
+    
   })
 );
 app.use(passport.initialize());
@@ -50,7 +50,7 @@ app.use(passport.session());
 
 connectDB();
 
-app.get("/", (req, res) => res.send("SportBuddy api running updated 8"));
+app.get("/", (req, res) => res.send("SportBuddy api running updated 5"));
 
 io.on("connection", (socket) => {
   console.log("user connected");
