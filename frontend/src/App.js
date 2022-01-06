@@ -46,7 +46,7 @@ function App() {
             render={() => (user ? <MainPage /> : <Login />)}
           />
           <Route
-            path="/login/google/success"
+            path="/google/success/:token"
             exact
             component={GoogleLoginSuccess}
           ></Route>

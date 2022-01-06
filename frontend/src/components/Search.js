@@ -13,10 +13,6 @@ const Search = () => {
     });
   };
 
-  React.useEffect(() => {
-    console.log(`type is ${type}`);
-  }, [type]);
-
   return (
     <form
       className="flex justify-center md:flex-row flex-col md:space-y-0 md:space-x-5 space-y-6 items-center mb-10 font-custom"

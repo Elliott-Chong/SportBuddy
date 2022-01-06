@@ -1,11 +1,44 @@
 const router = require("express").Router();
 const User = require("../models/User");
-const passport = require("passport");
 const config = require("config");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const axios = require("axios");
+const querystring = require("querystring");
 const auth = require("../middleware/auth");
 const { body, validationResult } = require("express-validator");
+
+function getTokens(code, clientId, clientSecret, redirectUri) {
+  /*
+  Returns:
+  Promise<{
+    access_token: string;
+    expires_in: Number;
+    refresh_token: string;
+    scope: string;
+    id_token: string;
+  }>
+  */
+  const url = "https://oauth2.googleapis.com/token";
+  const values = {
+    code,
+    client_id: clientId,
+    client_secret: clientSecret,
+    redirect_uri: redirectUri,
+    grant_type: "authorization_code",
+  };
+
+  return axios
+    .post(url, querystring.stringify(values), {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    })
+    .then((res) => res.data)
+    .catch((error) => {
+      throw new Error(error.message);
+    });
+}
 
 router.post(
   "/register",
@@ -73,19 +106,60 @@ router.get("/user", auth, (req, res) => {
     return res.status(400).send("No User");
   }
 });
-router.get(
-  "/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
-router.get(
-  "/google/redirect",
-  passport.authenticate("google", {
-    successRedirect: "http://localhost:3000/login/google/success",
-  }),
-  (req, res) => {
-    return res.send("logged in with google alr");
+// router.get(
+//   "/google",
+//   passport.authenticate("google", { scope: ["profile", "email"] })
+// );
+router.get("/google/redirect", async (req, res) => {
+  const code = req.query.code;
+  const { id_token, access_token } = await getTokens(
+    code,
+    config.get("googleClientId"),
+    config.get("googleClientSecret"),
+    "http://localhost:5001/api/auth/google/redirect"
+  );
+  const response = await axios.get(
+    `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${access_token}`,
+    {
+      headers: {
+        Authorization: `Bearer ${id_token}`,
+      },
+    }
+  );
+
+  let profile = response.data;
+  let user = await User.findOne({ googleId: profile.id });
+  if (user) {
+    let payload = {
+      user: {
+        id: user.id,
+      },
+    };
+    jwt.sign(payload, config.get("jwt_secret"), (err, token) => {
+      if (err) throw err;
+      return res.redirect(`http://localhost:3000/google/success/${token}`);
+    });
+  } else {
+    let newUser = new User({
+      email: profile.email,
+      googleId: profile.id,
+      username: profile.name,
+      loginMethod: "google",
+      avatar: profile.picture,
+    });
+    await newUser.save();
+    let payload = {
+      user: {
+        id: newUser.id,
+      },
+    };
+    jwt.sign(payload, config.get("jwt_secret"), (err, token) => {
+      if (err) throw err;
+      localStorage.setItem("token", token);
+      return res.redirect(`http://localhost:3000/google/success/${token}`);
+    });
   }
-);
+});
 router.post(
   "/login",
   body("email", "Please provide a valid email").isEmail(),

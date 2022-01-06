@@ -1,8 +1,26 @@
 import axios from "axios";
 import React, { createContext, useContext, useCallback } from "react";
 import { initialState, reducer } from "./reducer";
+import querystring from "querystring";
 import { v4 } from "uuid";
 const AppContext = createContext();
+function getGoogleAuthURL() {
+  const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
+  const options = {
+    redirect_uri: `http://localhost:5001/api/auth/google/redirect`,
+    client_id:
+      "156550196074-7ncak1iud208pk8lm8fokfd42d6kp56e.apps.googleusercontent.com",
+    access_type: "offline",
+    response_type: "code",
+    prompt: "consent",
+    scope: [
+      "https://www.googleapis.com/auth/userinfo.profile",
+      "https://www.googleapis.com/auth/userinfo.email",
+    ].join(" "),
+  };
+
+  return `${rootUrl}?${querystring.stringify(options)}`;
+}
 
 const Context = ({ children }) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
@@ -43,18 +61,12 @@ const Context = ({ children }) => {
 
   const continueGoogle = async (history) => {
     try {
-      const loginURL = "http://localhost:5001/api/auth/google";
-      let newWindow = window.open(loginURL, "_blank", "width=500,height=600");
-      if (newWindow) {
-        let timer = setInterval(async () => {
-          if (newWindow.closed) {
-            setTimeout(async () => {
-              const response = await axios.get("/api/auth/user");
-              setAlert("success", `Welcome ${response.data.username}`);
-              history.push("/");
-            }, 100);
+      const win = window.open(getGoogleAuthURL());
+      if (win) {
+        let timer = setInterval(() => {
+          if (win.closed) {
+            history.push("/");
             if (timer) clearInterval(timer);
-            return;
           }
         }, 50);
       }
