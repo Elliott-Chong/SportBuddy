@@ -43,7 +43,7 @@ const Context = ({ children }) => {
 
   const continueGoogle = async (history) => {
     try {
-      const loginURL = "http://localhost:5000/api/auth/google";
+      const loginURL = "http://localhost:5001/api/auth/google";
       let newWindow = window.open(loginURL, "_blank", "width=500,height=600");
       if (newWindow) {
         let timer = setInterval(async () => {
