@@ -3,7 +3,8 @@ import React, { createContext, useContext, useCallback } from "react";
 import { initialState, reducer } from "./reducer";
 import querystring from "querystring";
 import { v4 } from "uuid";
-const production = process.env.REACT_APP_PRODUCTION === "true";
+// const production = process.env.REACT_APP_PRODUCTION === "true";
+const production = true;
 const AppContext = createContext();
 function getGoogleAuthURL() {
   const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
