@@ -142,14 +142,14 @@ router.get("/join/:id", auth, async (req, res) => {
     const listing = await Listing.findById(req.params.id);
     if (!listing)
       return res.status(400).json({ errors: [{ msg: "Listing not found" }] });
-    if (listing.peopleJoined.length - 1 === listing.amountOfPeopleNeeded) {
-      return res.status(400).json({ errors: [{ msg: "No slots left!" }] });
-    }
     let newPeople = listing.peopleJoined;
     newPeople = newPeople.filter(
       (person) => person._id.toString() !== req.user.id.toString()
     );
     if (newPeople.length === listing.peopleJoined.length) {
+      if (listing.peopleJoined.length - 1 === listing.amountOfPeopleNeeded) {
+        return res.status(400).json({ errors: [{ msg: "No slots left!" }] });
+      }
       newPeople.push(req.user._id);
       listing.peopleJoined = newPeople;
       await listing.save();
