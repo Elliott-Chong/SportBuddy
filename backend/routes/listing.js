@@ -120,6 +120,23 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.delete("/:id", auth, async (req, res) => {
+  try {
+    const listing = await Listing.findById(req.params.id);
+    if (!listing)
+      return res.status(400).json({ errors: [{ msg: "Listing not found" }] });
+    await listing.remove();
+    return res.send("removed");
+  } catch (error) {
+    if (error.kind === "ObjectId")
+      return res.status(400).json([{ errors: ["Invalid listing ID"] }]);
+    console.log(error);
+    return res
+      .status(400)
+      .json({ errors: [{ msg: "Server Error in line 136" }] });
+  }
+});
+
 router.get("/join/:id", auth, async (req, res) => {
   try {
     const listing = await Listing.findById(req.params.id);

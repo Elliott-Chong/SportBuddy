@@ -3,11 +3,14 @@ import React, { createContext, useContext, useCallback } from "react";
 import { initialState, reducer } from "./reducer";
 import querystring from "querystring";
 import { v4 } from "uuid";
+const production = true;
 const AppContext = createContext();
 function getGoogleAuthURL() {
   const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
   const options = {
-    redirect_uri: `http://localhost:5001/api/auth/google/redirect`,
+    redirect_uri: !production
+      ? `http://localhost:5001/api/auth/google/redirect`
+      : `https://elliott-project.com:444/api/auth/google/redirect`,
     client_id:
       "156550196074-7ncak1iud208pk8lm8fokfd42d6kp56e.apps.googleusercontent.com",
     access_type: "offline",
@@ -41,6 +44,21 @@ const Context = ({ children }) => {
     }
   }, []);
 
+  const deleteListing = async (id, history) => {
+    try {
+      if (!window.confirm("Are you sure? This action cannot be undone."))
+        return;
+      await axios.delete(`/api/listing/${id}`);
+      history.push("/");
+      setAlert("success", "Post Deleted!");
+    } catch (error) {
+      console.log(error.response);
+      error.response.data.errors.forEach((error) => {
+        setAlert("danger", error.msg);
+      });
+    }
+  };
+
   const searchFunc = async (query, type) => {
     try {
       const config = {
@@ -55,7 +73,6 @@ const Context = ({ children }) => {
       error.response.data.errors.forEach((error) => {
         setAlert("danger", error.msg);
       });
-      console.error(error, "herre");
     }
   };
 
@@ -92,7 +109,6 @@ const Context = ({ children }) => {
     try {
       const response = await axios.post("/api/auth/login", body, config);
       dispatch({ type: "SET_TOKEN", payload: response.data.token });
-      // setAlert("success", `Welcome ${response.data.username}!`);
       history.push("/");
     } catch (error) {
       if (error.response.status === 401) {
@@ -250,6 +266,7 @@ const Context = ({ children }) => {
         enter,
         state,
         searchFunc,
+        deleteListing,
         dispatch,
         setAlert,
         continueGoogle,

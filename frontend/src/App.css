@@ -51,6 +51,9 @@ body.active {
 #alert-danger {
   background: rgba(255, 0, 0, 0.678);
 }
+.delete {
+  background: rgba(255, 0, 0, 0.678);
+}
 #alert-success {
   background: #21a0a0;
 }

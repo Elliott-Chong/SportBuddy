@@ -7,7 +7,7 @@ const axios = require("axios");
 const querystring = require("querystring");
 const auth = require("../middleware/auth");
 const { body, validationResult } = require("express-validator");
-
+const production = config.get("production");
 function getTokens(code, clientId, clientSecret, redirectUri) {
   /*
   Returns:
@@ -116,7 +116,9 @@ router.get("/google/redirect", async (req, res) => {
     code,
     config.get("googleClientId"),
     config.get("googleClientSecret"),
-    "http://localhost:5001/api/auth/google/redirect"
+    !production
+      ? "http://localhost:5001/api/auth/google/redirect"
+      : "https://elliott-project.com:444/api/auth/google/redirect"
   );
   const response = await axios.get(
     `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${access_token}`,
@@ -137,7 +139,11 @@ router.get("/google/redirect", async (req, res) => {
     };
     jwt.sign(payload, config.get("jwt_secret"), (err, token) => {
       if (err) throw err;
-      return res.redirect(`http://localhost:3000/google/success/${token}`);
+      return res.redirect(
+        !production
+          ? `http://localhost:3000/google/success/${token}`
+          : `https://sportbuddy-elle.netlify.app/google/success/${token}`
+      );
     });
   } else {
     let newUser = new User({
@@ -156,7 +162,9 @@ router.get("/google/redirect", async (req, res) => {
     jwt.sign(payload, config.get("jwt_secret"), (err, token) => {
       if (err) throw err;
       localStorage.setItem("token", token);
-      return res.redirect(`http://localhost:3000/google/success/${token}`);
+      return res.redirect(
+        `https://sportbuddy-elle.netlify.app/google/success/${token}`
+      );
     });
   }
 });

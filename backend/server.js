@@ -1,8 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
-const passport = require("passport");
-const initialisePassport = require("./config/passport-config");
 const config = require("config");
 const session = require("express-session");
 const app = express();
@@ -11,9 +9,12 @@ const server = http.createServer(app);
 const socketio = require("socket.io");
 const io = socketio(server);
 const PORT = 5001;
+const production = config.get("production");
 app.use(
   cors({
-    origin: "*",
+    origin: production
+      ? "https://sportbuddy-elle.netlify.app"
+      : "http://localhost:3000",
   })
 );
 // app.use((req, res, next) => {
@@ -33,7 +34,6 @@ app.use(
 //   next();
 // });
 
-initialisePassport(passport);
 app.use(express.json({ extended: false }));
 app.use(
   session({
@@ -42,8 +42,6 @@ app.use(
     saveUninitialized: false,
   })
 );
-app.use(passport.initialize());
-app.use(passport.session());
 
 connectDB();
 
@@ -63,5 +61,8 @@ app.use("/api/auth", require("./routes/auth"));
 app.use("/api/listing", require("./routes/listing"));
 
 server.listen(process.env.PORT || PORT, () =>
-  console.log("Server Running on http://localhost:5001")
+  console.log(
+    production ? "Production: " : "Development: ",
+    "Server Running on http://localhost:5001"
+  )
 );

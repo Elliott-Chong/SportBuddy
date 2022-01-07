@@ -1,6 +1,6 @@
 import React from "react";
 import Moment from "react-moment";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useGlobalContext } from "../context";
 import avatar from "../images/avatar-round.png";
 import Spinner from "../images/loading.gif";
@@ -9,10 +9,12 @@ const SingleListing = ({
     params: { id },
   },
 }) => {
+  const history = useHistory();
   const {
     joinRoom,
     state: { listing, user },
     fetchSingleListing,
+    deleteListing,
   } = useGlobalContext();
   React.useEffect(() => {
     fetchSingleListing(id);
@@ -67,12 +69,22 @@ const SingleListing = ({
             </span>
           </p>
         )}
-        <Link
-          to={`/chat/${id}`}
-          className={`bg-siena py-2 px-4 shadow-lg rounded-xl font-bold text-xl text-white hover:bg-yellow hover:text-siena transition-all duration-300`}
-        >
-          Chat Room
-        </Link>
+        <div className="md:flex md:justify-center md:items-center md:space-x-5 md:space-y-0 space-y-5">
+          <Link
+            to={`/chat/${id}`}
+            className={`bg-siena py-2 px-4 shadow-lg rounded-xl font-bold text-xl text-white hover:bg-yellow hover:text-siena transition-all duration-300`}
+          >
+            Chat Room
+          </Link>
+          {listing.user._id === user._id && (
+            <button
+              onClick={() => deleteListing(id, history)}
+              className={`delete bg-siena py-2 px-4 shadow-lg rounded-xl font-bold text-xl text-white hover:bg-yellow hover:text-siena transition-all duration-300`}
+            >
+              Delete Listing
+            </button>
+          )}
+        </div>
       </div>
       <div
         className="bg-gray-300 mt-10 text-siena rounded-3xl space-y-6 md:space-y-12  py-6 px-8 md:py-10 md:px-16 flex flex-col justify-start items-center"
