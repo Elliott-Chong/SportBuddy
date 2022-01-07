@@ -3,7 +3,6 @@ import { useGlobalContext } from "../context";
 import io from "socket.io-client";
 import Spinner from "../images/loading.gif";
 import ChatBubble from "../components/ChatBubble";
-import config from "../config";
 const production = true;
 
 const Chat = ({ match }) => {
