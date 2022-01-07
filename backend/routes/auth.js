@@ -7,7 +7,10 @@ const axios = require("axios");
 const querystring = require("querystring");
 const auth = require("../middleware/auth");
 const { body, validationResult } = require("express-validator");
-const production = config.get("production");
+
+const dotenv = require("dotenv");
+const yes = dotenv.config({ path: "../../../.env" });
+const production = yes.REACT_APP_PRODUCTION === "true";
 function getTokens(code, clientId, clientSecret, redirectUri) {
   /*
   Returns:
@@ -161,9 +164,10 @@ router.get("/google/redirect", async (req, res) => {
     };
     jwt.sign(payload, config.get("jwt_secret"), (err, token) => {
       if (err) throw err;
-      localStorage.setItem("token", token);
       return res.redirect(
-        `https://sportbuddy-elle.netlify.app/google/success/${token}`
+        !production
+          ? `http://localhost:3000/google/success/${token}`
+          : `https://sportbuddy-elle.netlify.app/google/success/${token}`
       );
     });
   }

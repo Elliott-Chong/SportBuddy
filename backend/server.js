@@ -9,12 +9,15 @@ const server = http.createServer(app);
 const socketio = require("socket.io");
 const io = socketio(server);
 const PORT = 5001;
-const production = config.get("production");
+const dotenv = require("dotenv");
+const yes = dotenv.config({ path: "../.env" }).parsed;
+const production = yes.REACT_APP_PRODUCTION === "true";
 app.use(
   cors({
     origin: production
       ? "https://sportbuddy-elle.netlify.app"
       : "http://localhost:3000",
+    credentials: true,
   })
 );
 // app.use((req, res, next) => {

@@ -5,8 +5,8 @@ import AppContext from "./context";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
-import config from "./config";
-axios.defaults.baseURL = config.production
+const production = process.env.REACT_APP_PRODUCTION === "true";
+axios.defaults.baseURL = !production
   ? "http://localhost:5001"
   : "https://elliott-project.com:444";
 axios.defaults.withCredentials = true;

@@ -25,6 +25,11 @@ const UserSchema = new mongoose.Schema({
         ref: "user",
         required: true,
       },
+      time: {
+        type: Date,
+        required: true,
+        default: Date.now,
+      },
     },
   ],
 

@@ -3,6 +3,5 @@
   "googleClientId": "156550196074-7ncak1iud208pk8lm8fokfd42d6kp56e.apps.googleusercontent.com",
   "googleClientSecret": "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",
   "session_secret": "nihaoyiersan",
-  "jwt_secret": "adfkjasdasndklfajsd",
-  "production": false
+  "jwt_secret": "adfkjasdasndklfajsd"
 }

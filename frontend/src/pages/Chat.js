@@ -3,6 +3,8 @@ import { useGlobalContext } from "../context";
 import io from "socket.io-client";
 import Spinner from "../images/loading.gif";
 import ChatBubble from "../components/ChatBubble";
+import config from "../config";
+const production = config.production;
 
 const Chat = ({ match }) => {
   const chatRef = React.useRef();
@@ -13,7 +15,9 @@ const Chat = ({ match }) => {
     fetchSingleListing,
     state: { listing },
   } = useGlobalContext();
-  const ENDPOINT = "http://192.168.50.74:5001";
+  const ENDPOINT = production
+    ? "https://elliott-project.com:444"
+    : "http://192.168.50.74:5001";
   const [message, setMessage] = React.useState("");
   const socketRef = React.useRef();
   const {
@@ -25,15 +29,19 @@ const Chat = ({ match }) => {
     const socket = io(ENDPOINT);
     socketRef.current = socket;
     socket.on("new message", (data) => {
-      console.log("receive in client");
       dispatch({
         type: "ADD_CHAT",
         payload: { user: data.user, message: data.message },
       });
-      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+      if (chatRef.current) {
+        chatRef.current.scrollTop = chatRef.current.scrollHeight;
+      }
       setMessage("");
     });
-  }, [fetchSingleListing, id, dispatch]);
+    return () => {
+      socket.disconnect();
+    };
+  }, [fetchSingleListing, id, dispatch, ENDPOINT]);
   if (!listing) return <img src={Spinner} alt="spinner gif" />;
   // })
   return (
