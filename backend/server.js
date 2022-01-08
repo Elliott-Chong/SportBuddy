@@ -11,7 +11,7 @@ const io = socketio(server);
 const PORT = 5001;
 const dotenv = require("dotenv");
 const yes = dotenv.config({ path: "../.env" }).parsed;
-const production = yes.REACT_APP_PRODUCTION === "true";
+const production = true;
 app.use(
   cors({
     origin: production

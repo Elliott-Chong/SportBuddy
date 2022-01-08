@@ -8,9 +8,7 @@ const querystring = require("querystring");
 const auth = require("../middleware/auth");
 const { body, validationResult } = require("express-validator");
 
-const dotenv = require("dotenv");
-const yes = dotenv.config({ path: "../../../.env" });
-const production = yes.REACT_APP_PRODUCTION === "true";
+const production = true;
 function getTokens(code, clientId, clientSecret, redirectUri) {
   /*
   Returns:
