@@ -13,7 +13,12 @@ This is my first serious full stack project using the **MongoDB**, **React**, **
 
  - *Custom* **theme** and **design**, layout preplanned in Inkscape, a vector based graphics editor.
  - *Custom* CSS implemented using **TailwindCSS**, a utility based CSS framework.
+ - *Fully* **responsive** design for a better User Experience.
  - *State management* involved React's **useReducer** hook and their **Context** **API**.
  - *Live chat feature* uses **WebSockets**, implemented by the NodeJS package socket.io, allowing for full-duplex communication channels over a single TCP connection. This allows for all clients to receive socket messages at the same time and update thier state accordingly.
  - **Mongoose**, a MongoDB wrapper, was used as a *Object Relational Wrapper* (ORM) to simplify the process of reading and writing to the database.
 
+# Screenshots
+![](https://i.imgur.com/9cKWVQe.png)
+![enter image description here](https://i.imgur.com/nZ8LN6Y.png)
+![enter image description here](https://i.imgur.com/f3Upowa.png)
