@@ -14,6 +14,7 @@ import Chat from "./pages/Chat";
 import GoogleLoginSuccess from "./pages/GoogleLoginSuccess";
 import SingleListing from "./pages/SingleListing";
 import CreateListing from "./pages/CreateListing";
+import About from "./pages/About";
 
 function App() {
   const {
@@ -45,6 +46,7 @@ function App() {
             exact
             render={() => (user ? <MainPage /> : <Login />)}
           />
+          <Route path='/about' exact component={About} />
           <Route
             path="/google/success/:token"
             exact

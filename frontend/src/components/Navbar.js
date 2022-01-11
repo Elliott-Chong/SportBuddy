@@ -64,7 +64,7 @@ const Navbar = () => {
             About
           </Link>
           <Link
-            className="my-0 font-bold bg-yellow px-6 custom-underline py-4 rounded-[15px]"
+            className="my-0 font-bold bg-yellow px-6  py-4 rounded-[15px]"
             to="/login"
           >
             Login/Sign up

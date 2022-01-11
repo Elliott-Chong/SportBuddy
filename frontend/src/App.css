@@ -45,9 +45,7 @@ body.active {
   outline: none;
 }
 
-.custom-underline {
-  position: relative;
-}
+  
 #alert-danger {
   background: rgba(255, 0, 0, 0.678);
 }
@@ -57,17 +55,23 @@ body.active {
 #alert-success {
   background: #21a0a0;
 }
-.custom-underline:after {
-  bottom: -4px;
+.custom-underline{
+  position:relative;
+  z-index:100;
+}
+.custom-underline::after {
+  z-index: 1;
+  bottom: 4px;
   left: 0px;
+  position:absolute;
   content: "";
-  width: 0;
-  height: 3px;
-  background-color: blue;
+  width: 0px;
+  height: 5px;
+  background-color: #e9c46a;
   transition: 200ms ease-in-out;
 }
 
-.custom-underline:hover:after {
+.custom-underline:hover::after {
   width: 100%;
 }
 
