@@ -7,8 +7,8 @@ const axios = require("axios");
 const querystring = require("querystring");
 const auth = require("../middleware/auth");
 const { body, validationResult } = require("express-validator");
+const production = require('dotenv').config({path:'../.env'}).parsed.REACT_APP_PRODUCTION === 'true'
 
-const production = true;
 function getTokens(code, clientId, clientSecret, redirectUri) {
   /*
   Returns:

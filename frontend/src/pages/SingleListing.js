@@ -29,42 +29,42 @@ const SingleListing = ({
       <div
         id="info"
         className="bg-gray-300 text-center rounded-3xl space-y-6 md:space-y-12  py-6 px-8 md:py-10 md:px-16 flex flex-col justify-start items-center"
-        style={{ borderRadius: "50px" }}
+        style={{ borderRadius: "15px" }}
       >
         <p className="font-bold flex flex-col md:inline justify-center items-center space-y-2 text-xl md:text-3xl text-darkGrey">
           <span className="text-black">Location:</span>{" "}
-          <span className="bg-yellow md:ml-3 py-2 px-4 rounded-full">
+          <span className="bg-yellow md:ml-3 py-2 px-4 rounded-[15px]">
             {listing.location.split("\n")[0]}
           </span>
         </p>
         <p className="font-bold flex flex-col md:inline justify-center items-center space-y-2 text-xl md:text-3xl text-darkGrey">
           <span className="text-black">Address:</span>{" "}
-          <span className="bg-yellow md:ml-3 py-2 px-4 rounded-full">
+          <span className="bg-yellow md:ml-3 py-2 px-4 rounded-[15px]">
             {listing.location.split("\n")[2]}
           </span>
         </p>
         <p className="font-bold flex flex-col md:inline text-xl md:text-3xl text-darkGrey justify-center items-center space-y-2">
           <span className="text-black">Date:</span>{" "}
-          <span className="bg-yellow md:ml-3 py-2 px-4 rounded-full">
+          <span className="bg-yellow md:ml-3 py-2 px-4 rounded-[15px]">
             <Moment format="YYYY/MM/DD">{listing.dateOfMeet}</Moment>
           </span>
         </p>
         <p className="font-bold flex flex-col md:inline text-xl md:text-3xl text-darkGrey justify-center items-center space-y-2">
           <span className="text-black">Sport:</span>
-          <span className="bg-yellow md:ml-3 py-2 px-4 rounded-full">
+          <span className="bg-yellow md:ml-3 py-2 px-4 rounded-[15px]">
             {listing.sport}
           </span>
         </p>
         <p className="font-bold flex flex-col md:inline text-xl md:text-3xl text-darkGrey justify-center items-center space-y-2">
           <span className="text-black">Slots Left:</span>
-          <span className="bg-yellow md:ml-3 py-2 px-4 rounded-full">
+          <span className="bg-yellow md:ml-3 py-2 px-4 rounded-[15px]">
             {listing.amountOfPeopleNeeded - listing.peopleJoined.length + 1}
           </span>
         </p>
         {listing && listing.remarks && (
           <p className="font-bold flex flex-col md:inline text-xl md:text-3xl text-darkGrey justify-center items-center space-y-2">
             <span className="text-black">Remarks:</span>
-            <span className="bg-yellow md:ml-3 py-2 px-4 rounded-full">
+            <span className="bg-yellow md:ml-3 py-2 px-4 rounded-[15px]">
               {listing.remarks}
             </span>
           </p>
@@ -89,7 +89,7 @@ const SingleListing = ({
       <div
         className="bg-gray-300 mt-10 text-siena rounded-3xl space-y-6 md:space-y-12  py-6 px-8 md:py-10 md:px-16 flex flex-col justify-start items-center"
         id="people"
-        style={{ borderRadius: "50px" }}
+        style={{ borderRadius: "15px" }}
       >
         <div className="flex items-center justify-center space-x-4">
           <h1 className="md:text-4xl text-2xl font-bold">People Joined</h1>
@@ -114,7 +114,7 @@ const SingleListing = ({
                   <img
                     src={person.avatar || avatar}
                     alt="avatar img"
-                    className="w-28 h-28 rounded-full"
+                    className="w-28 h-28 rounded-[15px]"
                   />
                   <div className="md:relative md:block flex justify-center items-center md:space-x-0 space-x-2">
                     <p className="font-bold text-2xl">{person.username}</p>

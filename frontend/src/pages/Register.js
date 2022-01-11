@@ -25,7 +25,7 @@ const Register = () => {
       <button
         onClick={() => continueGoogle(history)}
         id="google"
-        className="flex border-4 border-yellow py-2 px-4 rounded-full justify-center items-center space-x-2 text-2xl font-bold text-darkGrey"
+        className="flex border-4 border-yellow py-2 px-4 rounded-[15px] justify-center items-center space-x-2 text-2xl font-bold text-darkGrey"
       >
         <FcGoogle className="text-4xl" />
         <span>Continue with Google</span>
@@ -44,7 +44,7 @@ const Register = () => {
           value={username}
           onChange={onChange}
           type="text"
-          className="border-4 max-w-xl border-yellow font-bold w-full pt-2 py-2 px-5 rounded-full font-xl"
+          className="border-4 max-w-xl border-yellow font-bold w-full pt-2 py-2 px-5 rounded-[15px] font-xl"
           name="username"
           id="username"
           placeholder="Username"
@@ -53,7 +53,7 @@ const Register = () => {
           value={email}
           onChange={onChange}
           type="text"
-          className="border-4 border-yellow font-bold w-full max-w-xl  pt-2 py-2 px-5 rounded-full font-xl"
+          className="border-4 border-yellow font-bold w-full max-w-xl  pt-2 py-2 px-5 rounded-[15px] font-xl"
           name="email"
           id="email"
           placeholder="Email"
@@ -62,7 +62,7 @@ const Register = () => {
           type="password"
           value={password}
           name="password"
-          className="border-4 border-yellow pt-2 py-2 w-full max-w-xl font-bold px-5 rounded-full font-xl"
+          className="border-4 border-yellow pt-2 py-2 w-full max-w-xl font-bold px-5 rounded-[15px] font-xl"
           id="password"
           onChange={onChange}
           placeholder="Password"
@@ -71,14 +71,14 @@ const Register = () => {
           type="password"
           name="password2"
           value={password2}
-          className="border-4 border-yellow pt-2 py-2 w-full max-w-xl font-bold px-5 rounded-full font-xl"
+          className="border-4 border-yellow pt-2 py-2 w-full max-w-xl font-bold px-5 rounded-[15px] font-xl"
           id="password2"
           onChange={onChange}
           placeholder="Confirm Password"
         />
         <input
           type="submit"
-          className="cursor-pointer text-xl border-4 border-yellow bg-white px-4 py-2 rounded-full font-bold  text-darkGrey"
+          className="cursor-pointer text-xl border-4 border-yellow bg-white px-4 py-2 rounded-[15px] font-bold  text-darkGrey"
           value="Register"
         />
       </form>

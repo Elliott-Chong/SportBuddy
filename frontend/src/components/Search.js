@@ -24,7 +24,7 @@ const Search = () => {
       <select
         name="type"
         value={type}
-        className="py-2 px-4 bg-siena md:text-xl text-lg font-bold text-white   rounded-full"
+        className="py-2 px-4 bg-siena md:text-xl text-lg font-bold text-white rounded-[10px]"
         onChange={change}
       >
         <option value="both">Filter by</option>
@@ -42,8 +42,7 @@ const Search = () => {
       <input
         type="submit"
         value="Go"
-        className="bg-siena md:py-3 md:px-6 text-white py-2 font-bold md:text-2xl text-xl rounded-sm px-4"
-        style={{ borderRadius: "40px" }}
+        className="bg-siena md:py-2 md:px-4 text-white py-2 font-bold md:text-2xl text-xl rounded-[15px] px-4"
         onClick={() => {
           searchFunc(query, type);
         }}

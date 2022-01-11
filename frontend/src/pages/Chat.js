@@ -3,7 +3,7 @@ import { useGlobalContext } from "../context";
 import io from "socket.io-client";
 import Spinner from "../images/loading.gif";
 import ChatBubble from "../components/ChatBubble";
-const production = true;
+const production = process.env.REACT_APP_PRODUCTION==='true';
 
 const Chat = ({ match }) => {
   const chatRef = React.useRef();
@@ -46,11 +46,11 @@ const Chat = ({ match }) => {
   return (
     <div
       id="chat-container"
-      className="bg-anothershadeofgrey pb-2 md:pb-4 rounded-3xl"
+      className="bg-anothershadeofgrey pb-2 md:pb-4 rounded-2xl"
     >
       <div
         id="info-bar"
-        className="bg-cardGrey rounded-t-3xl flex justify-center items-center md:py-4 py-1 text-xl md:text-2xl font-bold"
+        className="bg-cardGrey rounded-t-2xl flex justify-center items-center md:py-4 py-1 text-xl md:text-2xl font-bold"
       >
         {listing.sport}
       </div>
@@ -71,13 +71,13 @@ const Chat = ({ match }) => {
             e.preventDefault();
             enter(message, socketRef.current);
           }}
-          className="mx-2 md:mx-4 rounded-3xl"
+          className="mx-2 md:mx-4 rounded-2xl"
         >
           <input
             ref={inputRef}
             autoComplete={"off"}
             type="text"
-            className="w-full py-2 px-4 rounded-3xl text-lg "
+            className="w-full py-2 px-4 rounded-2xl text-lg "
             placeholder="Type a message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}

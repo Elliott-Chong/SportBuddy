@@ -20,7 +20,7 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "TAILWIND_MODE=watch craco start",
     "build": "CI= craco build && echo '/* /index.html  200' | cat >build/_redirects",
     "test": "craco test",
     "eject": "react-scripts eject"

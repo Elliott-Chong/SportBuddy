@@ -15,7 +15,7 @@ const Listings = () => {
   return (
     <section
       className="md:bg-grey md:px-20 md:py-12 flex flex-col items-center "
-      style={{ borderRadius: "50px" }}
+      style={{ borderRadius: "15px" }}
     >
       <Search />
       {loading ? (

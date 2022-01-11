@@ -12,7 +12,7 @@ const IndividualListing = ({
     <div
       className="md:bg-white p-4 md:px-11 py-6 flex justify-around flex-col bg-cardGrey bg-opacity-5 font-custom"
       style={{
-        borderRadius: "50px",
+        borderRadius: "20px",
       }}
     >
       <div className="info flex flex-col text-white font-semibold text-xl justify-center items-center space-y-5 text-center font-custom">
@@ -25,7 +25,7 @@ const IndividualListing = ({
 
         <Link
           to={`/listing/${id}`}
-          className=" bg-yellow py-2 px-2 rounded-full  font-custom"
+          className=" bg-yellow py-2 px-2 rounded-[15px] font-custom"
         >
           <p className="inline-block text-center font-custom text-darkGrey font-semibold md:text-2xl text-xl px-4">
             {slotsLeft - peopleJoinedLength + 1} slot

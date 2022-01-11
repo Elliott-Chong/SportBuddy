@@ -10,8 +10,7 @@ const socketio = require("socket.io");
 const io = socketio(server);
 const PORT = 5001;
 const dotenv = require("dotenv");
-const yes = dotenv.config({ path: "../.env" }).parsed;
-const production = true;
+const production = dotenv.config({ path: "../.env" }).parsed.REACT_APP_PRODUCTION==='true';
 app.use(
   cors({
     origin: production
