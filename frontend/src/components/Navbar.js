@@ -60,9 +60,6 @@ const Navbar = () => {
               </Link>
             </>
           )}
-          <Link className="my-0 font-bold custom-underline" to="/about">
-            About
-          </Link>
           <Link
             className="my-0 font-bold bg-yellow px-6  py-4 rounded-[15px]"
             to="/login"
@@ -76,9 +73,7 @@ const Navbar = () => {
           onClick={toggleHam}
           className="md:hidden m-10"
         >
-          {/* <div className="ham relative top-0"></div> */}
           <div className="ham"></div>
-          {/* <div className="ham relative top-0"></div> */}
         </button>
       </nav>
 

@@ -7,7 +7,7 @@ const app = express();
 const http = require("http");
 const server = http.createServer(app);
 const socketio = require("socket.io");
-const io = socketio(server);
+const io = socketio(server, {wsEngine: 'ws'});
 const PORT = 5001;
 const dotenv = require("dotenv");
 const production = dotenv.config({ path: "../.env" }).parsed.REACT_APP_PRODUCTION==='true';
