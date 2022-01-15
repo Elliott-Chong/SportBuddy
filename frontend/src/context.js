@@ -26,7 +26,7 @@ function getGoogleAuthURL() {
 
 const Context = ({ children }) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
-  React.useEffect(() => console.log(state), [state]);
+  // React.useEffect(() => console.log(state), [state]);
 
   const loadUser = useCallback(async () => {
     try {

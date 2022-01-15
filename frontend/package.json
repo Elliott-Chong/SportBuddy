@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "TAILWIND_MODE=watch craco start",
-    "build": "CI= craco build && echo '/* /index.html  200' | cat >build/_redirects",
+    "build": "rm -rf '/home/elliott/deploys/SportBuddy/build' && BUILD_PATH='/home/elliott/deploys/SportBuddy/build' craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
   },
