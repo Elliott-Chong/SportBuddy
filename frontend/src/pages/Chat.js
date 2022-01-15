@@ -15,7 +15,7 @@ const Chat = ({ match }) => {
     state: { listing },
   } = useGlobalContext();
   const ENDPOINT = production
-    ? "https://elliott-project.com:444"
+    ? "https://elliott-project.com"
     : "http://192.168.50.74:5001";
   const [message, setMessage] = React.useState("");
   const socketRef = React.useRef();
