@@ -10,7 +10,7 @@ function getGoogleAuthURL() {
   const options = {
     redirect_uri: !production
       ? `http://localhost:5001/api/auth/google/redirect`
-      : `https://elliott-project.com:444/api/auth/google/redirect`,
+      : `https://elliott-project.com/api/auth/google/redirect`,
     client_id:
       "156550196074-7ncak1iud208pk8lm8fokfd42d6kp56e.apps.googleusercontent.com",
     access_type: "offline",
@@ -26,7 +26,7 @@ function getGoogleAuthURL() {
 
 const Context = ({ children }) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
-  React.useEffect(() => console.log(state), [state]);
+  // React.useEffect(() => console.log(state), [state]);
 
   const loadUser = useCallback(async () => {
     try {
@@ -156,6 +156,7 @@ const Context = ({ children }) => {
       const response = await axios.get("/api/listing");
       dispatch({ type: "SET_LISTINGS", payload: response.data });
     } catch (error) {
+	    console.log(error.response)
       error.response.data.errors.forEach((error) => {
         setAlert("danger", error.msg);
       });

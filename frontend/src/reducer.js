@@ -43,7 +43,6 @@ const reducer = (state, action) => {
       };
 
     case "ADD_CHAT":
-      console.log("reducer beuing called in add caht");
       let newChat = state.listing.chat;
       newChat.push({ user: payload.user, message: payload.message });
       let copyListing = state.listing;
@@ -64,7 +63,7 @@ const reducer = (state, action) => {
       localStorage.setItem("token", payload);
       return { ...state, token: payload };
     case "SET_USER":
-      return { ...state, user: payload };
+      return { ...state, user: payload, listing:null};
     case "CLEAR_USER":
       localStorage.removeItem("token");
       return { ...state, user: null, listing: null, token: null };

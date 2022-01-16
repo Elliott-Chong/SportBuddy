@@ -119,7 +119,7 @@ router.get("/google/redirect", async (req, res) => {
     config.get("googleClientSecret"),
     !production
       ? "http://localhost:5001/api/auth/google/redirect"
-      : "https://elliott-project.com:444/api/auth/google/redirect"
+      : "https://elliott-project.com/api/auth/google/redirect"
   );
   const response = await axios.get(
     `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${access_token}`,
@@ -143,7 +143,7 @@ router.get("/google/redirect", async (req, res) => {
       return res.redirect(
         !production
           ? `http://localhost:3000/google/success/${token}`
-          : `https://sportbuddy-elle.netlify.app/google/success/${token}`
+          : `https://sportbuddy.elliottchong.com/google/success/${token}`
       );
     });
   } else {
@@ -165,7 +165,7 @@ router.get("/google/redirect", async (req, res) => {
       return res.redirect(
         !production
           ? `http://localhost:3000/google/success/${token}`
-          : `https://sportbuddy-elle.netlify.app/google/success/${token}`
+          : `https://sportbuddy.elliottchong.com/google/success/${token}`
       );
     });
   }

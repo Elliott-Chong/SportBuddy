@@ -7,34 +7,18 @@ const app = express();
 const http = require("http");
 const server = http.createServer(app);
 const socketio = require("socket.io");
-const io = socketio(server);
+const io = socketio(server, {wsEngine: 'ws'});
 const PORT = 5001;
 const dotenv = require("dotenv");
 const production = dotenv.config({ path: "../.env" }).parsed.REACT_APP_PRODUCTION==='true';
 app.use(
   cors({
     origin: production
-      ? "https://sportbuddy-elle.netlify.app"
+      ? "https://sportbuddy.elliottchong.com"
       : "http://localhost:3000",
     credentials: true,
   })
 );
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "https://sportbuddy-elle.netlify.app"); // update to match the domain you will make the request from
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept, x-auth-token, Application-Type, application-type"
-//   );
-//   res.header("Access-Control-Allow-Methods", "GET,HEAD,POST,PUT,DELETE");
-
-//   req.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-//   req.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept, x-auth-token, Application-Type, application-type"
-//   );
-//   req.header("Access-Control-Allow-Methods", "GET,HEAD,POST,PUT,DELETE");
-//   next();
-// });
 
 app.use(express.json({ extended: false }));
 app.use(
@@ -47,7 +31,7 @@ app.use(
 
 connectDB();
 
-app.get("/", (req, res) => res.send("SportBuddy api running updated 5"));
+app.get("/", (req, res) => res.send("SportBuddy API running"));
 
 io.on("connection", (socket) => {
   console.log("user connected");

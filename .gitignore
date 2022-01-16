@@ -24,6 +24,8 @@ yarn-error.log*
 
 #env
 .env
+.env.production
+.env/*
 
 #default
 config/default.json
