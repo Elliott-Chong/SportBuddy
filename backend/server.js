@@ -11,17 +11,9 @@ const io = socketio(server, {wsEngine: 'ws'});
 const PORT = 5001;
 const dotenv = require("dotenv");
 const production = dotenv.config({ path: "../.env" }).parsed.REACT_APP_PRODUCTION==='true';
-const whitelist = ['https://sportbuddy.elliottchong.com', 'http://localhost:3000','https://sportbuddy-elle.netlify.app']
 app.use(
   cors({
-	  origin:function(origin,callback){
-		  if (whitelist.indexOf(origin)!=-1) {
-			  callback(null, true)
-		  }
-		  else {
-			  callback(new Error("Not allowed by CORS elle"))
-		  }
-	  },
+	  origin:production?'https://sportbuddy.elliottchong.com':'http://localhost:3000',
     credentials: true,
   })
 );
