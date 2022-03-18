@@ -1,5 +1,5 @@
 # SportBuddy
-Ever wanted to play some sports but find that your friends are too busy? With **SportBuddy**, you can find Buddies to enjoy your favourite sports together! Just create a new posting with your desired Sport, and await other users to join the group. You can chat with them in the live chat section for more details. Visit the site now at https://SportBuddy-Elle.netlify.app!
+Ever wanted to play some sports but find that your friends are too busy? With **SportBuddy**, you can find Buddies to enjoy your favourite sports together! Just create a new posting with your desired Sport, and await other users to join the group. You can chat with them in the live chat section for more details. Visit the site now at https://sportbuddy.elliottchong.com!
 
 # Link to Code
 https://GitHub.com/Elliott-Chong/SportBuddy
