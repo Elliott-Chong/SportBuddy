@@ -3,9 +3,7 @@ Ever wanted to play some sports but find that your friends are too busy? With **
 
 # Link to Code
 https://GitHub.com/Elliott-Chong/SportBuddy
-# Submission Category
 
-***Choose Your Own Adventure***
 # Technologies Used
 This is my first serious full stack project using the **MongoDB**, **React**, **Express** and **NodeJS** (*MERN*) Stack. Featuring a custom authentication system using **JSON Web Tokens** for session management, and Google OAuth for SSO. 
 
