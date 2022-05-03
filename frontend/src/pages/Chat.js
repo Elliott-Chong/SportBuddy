@@ -3,7 +3,7 @@ import { useGlobalContext } from "../context";
 import io from "socket.io-client";
 import Spinner from "../images/loading.gif";
 import ChatBubble from "../components/ChatBubble";
-const production = process.env.REACT_APP_PRODUCTION==='true';
+const production = process.env.REACT_APP_PRODUCTION === 'true';
 
 const Chat = ({ match }) => {
   const chatRef = React.useRef();
@@ -15,7 +15,7 @@ const Chat = ({ match }) => {
     state: { listing },
   } = useGlobalContext();
   const ENDPOINT = production
-    ? "https://elliott-project.com"
+    ? "https://sportbuddy.elliott-project.com"
     : "http://192.168.50.74:5001";
   const [message, setMessage] = React.useState("");
   const socketRef = React.useRef();

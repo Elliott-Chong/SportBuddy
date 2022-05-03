@@ -7,7 +7,7 @@ const axios = require("axios");
 const querystring = require("querystring");
 const auth = require("../middleware/auth");
 const { body, validationResult } = require("express-validator");
-const production = require('dotenv').config({path:'../.env'}).parsed.REACT_APP_PRODUCTION === 'true'
+const production = require('dotenv').config({ path: '../.env' }).parsed.REACT_APP_PRODUCTION === 'true'
 
 function getTokens(code, clientId, clientSecret, redirectUri) {
   /*
@@ -119,7 +119,7 @@ router.get("/google/redirect", async (req, res) => {
     config.get("googleClientSecret"),
     !production
       ? "http://localhost:5001/api/auth/google/redirect"
-      : "https://elliott-project.com/api/auth/google/redirect"
+      : "https://sportbuddy.elliott-project.com/api/auth/google/redirect"
   );
   const response = await axios.get(
     `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${access_token}`,

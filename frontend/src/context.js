@@ -3,14 +3,14 @@ import React, { createContext, useContext, useCallback } from "react";
 import { initialState, reducer } from "./reducer";
 import querystring from "querystring";
 import { v4 } from "uuid";
-const production = process.env.REACT_APP_PRODUCTION==='true';
+const production = process.env.REACT_APP_PRODUCTION === 'true';
 const AppContext = createContext();
 function getGoogleAuthURL() {
   const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
   const options = {
     redirect_uri: !production
       ? `http://localhost:5001/api/auth/google/redirect`
-      : `https://elliott-project.com/api/auth/google/redirect`,
+      : `https://sportbuddy.elliott-project.com/api/auth/google/redirect`,
     client_id:
       "156550196074-7ncak1iud208pk8lm8fokfd42d6kp56e.apps.googleusercontent.com",
     access_type: "offline",
@@ -156,7 +156,7 @@ const Context = ({ children }) => {
       const response = await axios.get("/api/listing");
       dispatch({ type: "SET_LISTINGS", payload: response.data });
     } catch (error) {
-	    console.log(error.response)
+      console.log(error.response)
       error.response.data.errors.forEach((error) => {
         setAlert("danger", error.msg);
       });
